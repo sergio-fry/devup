@@ -2,7 +2,10 @@ require_relative "lib/devup/version"
 
 Gem::Specification.new do |spec|
   spec.name = "devup"
+
   spec.version = Devup::VERSION
+  spec.version = "#{spec.version}-alpha-#{ENV["TRAVIS_BUILD_NUMBER"]}" if ENV["TRAVIS"]
+
   spec.authors = ["Sergei O. Udalov"]
   spec.email = ["sergei@udalovs.ru"]
 

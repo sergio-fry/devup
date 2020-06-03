@@ -15,3 +15,5 @@
 .vimrc
 
 spec/dummy/.env.services
+
+devup-*.gem

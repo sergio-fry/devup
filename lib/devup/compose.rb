@@ -4,7 +4,7 @@ module Devup
   class Compose
     attr_reader :path, :project
 
-    def initialize(path, project: nil)
+    def initialize(path, project: "devup")
       @path = path
       @project = project
     end
@@ -17,6 +17,15 @@ module Devup
       config["services"][name]["ports"]
     end
 
+    def up
+      exec "up -d --remove-orphans"
+    end
+
+    def stop
+      exec "stop"
+      exec "rm -f"
+    end
+
     private
 
     def config
@@ -25,6 +34,10 @@ module Devup
 
     def config_content
       File.read(path)
+    end
+
+    def exec(cmd)
+      `docker-compose -p #{project} -f #{path} #{cmd}`
     end
   end
 end

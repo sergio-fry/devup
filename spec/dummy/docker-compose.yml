@@ -5,7 +5,7 @@ services:
     image: nginx
     ports:
       - "80"
-      - "81:8181"
+      - "433"
 
   pg:
     image: nginx

@@ -13,3 +13,5 @@
 
 # Editor config
 .vimrc
+
+spec/dummy/.env.services

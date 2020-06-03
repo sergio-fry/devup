@@ -36,17 +36,31 @@ module Devup
 
     def up
       compose.up
+      write_dotenv
     end
 
     def down
       compose.stop
       compose.rm
+      clear_dotenv
+    end
+
+    def root
+      Pathname.new pwd
     end
 
     private
 
-    def root
-      Pathname.new pwd
+    def write_dotenv
+      File.open(root.join(".env.services"), "w") { |f| f.write dotenv }
+    end
+
+    def clear_dotenv
+      File.open(root.join(".env.services"), "w") { |f| f.write "" }
+    end
+
+    def dotenv
+      vars.reduce({}, :merge).map { |k, v| "#{k}=#{v}" }.join("\n")
     end
   end
 end

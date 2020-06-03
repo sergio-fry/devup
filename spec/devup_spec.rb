@@ -7,9 +7,14 @@ RSpec.describe Devup do
 
   let(:docker_compose_path) { Devup.root.join("spec/dummy/docker-compose.yml") }
 
+  let(:devup) { Devup::Environment.new pwd: Devup.root.join("spec/dummy") }
+
   it "works" do
-    devup = Devup::Environment.new pwd: Devup.root.join("spec/dummy")
     devup.up
-    devup.down
+
+    dotenv = File.read(devup.root.join(".env.services"))
+    expect(dotenv).to include("NGINX_HOST=0.0.0.0")
   end
+
+  after { devup.down }
 end

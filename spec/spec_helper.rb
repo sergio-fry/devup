@@ -1,6 +1,6 @@
 require "bundler/setup"
-require "coveralls"
-Coveralls.wear!
+require "simplecov"
+SimpleCov.start
 
 require "byebug"
 require "devup"

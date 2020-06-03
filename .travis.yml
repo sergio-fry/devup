@@ -1,11 +1,14 @@
+env:
+  matrix:
+  - BUNDLER_VERSION=2.1.4
+  global:
+    secure: rJoctOEKaQr/zzph355qU33+1/REwZ8+XuMzxbeNuSM7sRfu2VcxJsjP0Vxqhq33vl536lknqemLDJKxwEg0sqPgIqV+jXfmpjvescEJhaOah+bCJfqQqVnvKPIQ/H1GSgvO1D8t/ypJWQDZF7xN5UgCL5joLkVZn40zyfgBhT/DCb0sif8A+nSeGPktp5wI3PDyL/IEFg9SZkMcHIId54lzkm2Gr9Cykgct4m66kHbJ0sY/is7LpkN5ZqkgZUmI0hZxsDkrhb0BFnxgAKEjSco5lCvsi7+68GIJ9UT4HHDINxagc5surwfMifXgyNDw0zFtmkUhCf/e5Bf3Dhp3QGbqT5bjmijB4zHZTUbnG5lSDrcW7/DNagwS/FXsP67RHI5Gc8J82ljQB1nlVLOOHmgne84wnayWPAwect9bTA44zHoKiQRqC6D8frQb1p0tenfqGS9KtrQjLsmXTfX5x8s/MHC3jrgYhqLjmHZG5R5nnjE9rvOiU9B288PYL7UAwfvPaLtYSsOKEWmylxA0+Wstaoq1dtODyY0RX6+tDRGnDdJJ2NdkfRTPU8skTXd38apiAgPVLMRQ1BkSBqukW4Zavvgi1DAPIywHT/L/JV4EuPAJuJhHHHeRG8k/Ac5dV8dP31IoJUJYsVV/FVrzqnCzRmKzccJYoFy1oPXvROE=
 language: ruby
 cache: bundler
 rvm:
 - 2.7.1
 services:
 - docker
-env:
-- BUNDLER_VERSION=2.1.4
 before_install:
 - gem install bundler -v $BUNDLER_VERSION
 bundler_args: "--jobs=3 --retry=3"
@@ -18,6 +21,12 @@ deploy:
     tags: true
     repo: sergio-fry/devup
   skip_cleanup: 'true'
-
-
-  bash <(curl -s https://codecov.io/bash)
+before_script:
+- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+  > ./cc-test-reporter
+- chmod +x ./cc-test-reporter
+- "./cc-test-reporter before-build"
+script:
+- rake spec
+after_script:
+- "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"

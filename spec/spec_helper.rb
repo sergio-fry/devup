@@ -2,6 +2,7 @@ require "bundler/setup"
 require "simplecov"
 SimpleCov.start
 
+require "byebug"
 require "devup"
 
 RSpec.configure do |config|

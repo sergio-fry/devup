@@ -31,7 +31,8 @@ module Devup
     end
 
     describe "#service_ports" do
-      it { expect(compose.service_ports("ngnix")).to eq ["80", "81:8181"] }
+      it { expect(compose.service_ports("nginx")).to eq ["80", "81:8181"] }
+      it { expect(compose.service_ports("postgres")).to eq ["5432"] }
     end
   end
 end

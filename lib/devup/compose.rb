@@ -13,8 +13,8 @@ module Devup
       config["services"].keys
     end
 
-    def service_ports
-      []
+    def service_ports(name)
+      config["services"][name]["ports"]
     end
 
     private

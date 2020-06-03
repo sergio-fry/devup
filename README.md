@@ -1,8 +1,10 @@
 # Devup
 
-![Travis (.org)](https://img.shields.io/travis/sergio-fry/devup)
+![Travis (.com) branch](https://img.shields.io/travis/com/sergio-fry/devup/master)
+[![Coverage Status](https://coveralls.io/repos/github/sergio-fry/devup/badge.svg?branch=master)](https://coveralls.io/github/sergio-fry/devup?branch=master)
 ![Gem](https://img.shields.io/gem/v/devup)
 ![Gem](https://img.shields.io/gem/dt/devup)
+![GitHub repo size](https://img.shields.io/github/repo-size/sergio-fry/devup)
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/devup`. To experiment with that code, run `bin/console` for an interactive prompt.
 

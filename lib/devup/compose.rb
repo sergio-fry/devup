@@ -23,6 +23,9 @@ module Devup
 
     def stop
       exec "stop"
+    end
+
+    def rm
       exec "rm -f"
     end
 

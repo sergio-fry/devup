@@ -34,6 +34,15 @@ module Devup
       }.flatten
     end
 
+    def up
+      compose.up
+    end
+
+    def down
+      compose.stop
+      compose.rm
+    end
+
     private
 
     def root

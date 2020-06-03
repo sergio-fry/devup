@@ -1,4 +1,4 @@
-require "devup/compose"
+require "devup/environment"
 
 RSpec.describe Devup do
   it "has a version number" do
@@ -8,8 +8,8 @@ RSpec.describe Devup do
   let(:docker_compose_path) { Devup.root.join("spec/dummy/docker-compose.yml") }
 
   it "works" do
-    compose = Devup::Compose.new docker_compose_path, project: "devup-test"
-    compose.up
-    compose.stop
+    devup = Devup::Environment.new pwd: Devup.root.join("spec/dummy")
+    devup.up
+    devup.down
   end
 end

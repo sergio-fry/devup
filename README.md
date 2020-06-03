@@ -1,6 +1,8 @@
 # Devup
 
+![Travis (.org)](https://img.shields.io/travis/sergio-fry/devup)
 ![Gem](https://img.shields.io/gem/v/devup)
+![Gem](https://img.shields.io/gem/dt/devup)
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/devup`. To experiment with that code, run `bin/console` for an interactive prompt.
 

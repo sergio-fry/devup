@@ -1,7 +1,8 @@
 # Devup
 
 ![Travis (.com) branch](https://img.shields.io/travis/com/sergio-fry/devup/master)
-[![Coverage Status](https://coveralls.io/repos/github/sergio-fry/devup/badge.svg?branch=master)](https://coveralls.io/github/sergio-fry/devup?branch=master)
+![Code Climate coverage](https://img.shields.io/codeclimate/coverage/sergio-fry/devup)
+![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/sergio-fry/devup)
 ![Gem](https://img.shields.io/gem/v/devup)
 ![Gem](https://img.shields.io/gem/dt/devup)
 ![GitHub repo size](https://img.shields.io/github/repo-size/sergio-fry/devup)

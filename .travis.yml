@@ -8,9 +8,8 @@ env:
 - BUNDLER_VERSION=2.1.4
 before_install:
 - gem install bundler -v $BUNDLER_VERSION
+bundler_args: --jobs=3 --retry=3
 deploy:
   provider: rubygems
   api_key:
     secure: iW1wt+qHBevHwDXPugjmkDAtmKDTAQMuC7NCg7Sipvj+bw6u34mbGuiab+3rNcsVr9njrveZTDSZ1gScYIowQTM7v/aw/AzOsHhfNFhQzGgOvllDn48yaFa83P9Jlv4pJ3MQjaPSj7hCWAiD9ysvcwlFl24TcllkxGzXvBsjW5EIkzBPLv5SliXi5rqRCplVW4DPQwWlcEJoMSsgNIJ9ztnRqdl7qIYoQrHebCIoy561pZMH/5jqRg6SD6EH8bDRXMXx690+HoeXfgZkiRH1DJuJv1M0YHtKnxM7yUCn78VQyEBSGICn8j8JP4hmvCqQrXl3hq7X2vH/ffHpDFSfG92Xi+SJwXxPY0zy+oSP3i5lpa+2goLpN1c0LcLFMLU3W10awyAwzv8EMq1ToZlbQ1qnBDydWBvpl4NB/TmMQopZYXgwRoWORhjod8ZzaTapewjwx4CJCim0QZXDxMuF1Uzdn+Jt+LEf/HGto0Txl4vMAwSqUfwDgr+f3m5s8airxhgpzGPWPEwH+DpV/GtI33U45iUHCXZwWRopizKf4pBkIUSLKSAC6RY+54qVJBPkz1jplKy83Oj5W8I6XBYdGSWJGrNhWEDsd8t7g2kaw0gUSEz1NbiJRv/JsdMuH6OwOSQoJPU2UW+7N60Eyu0UpqttkI3tclSqmtuNTJCnSS0=
-  on:
-    tags: true

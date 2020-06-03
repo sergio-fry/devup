@@ -4,7 +4,6 @@
 [![Gem](https://img.shields.io/gem/v/devup)](https://rubygems.org/gems/devup)
 [![Code Climate coverage](https://img.shields.io/codeclimate/coverage/sergio-fry/devup)](https://codeclimate.com/github/sergio-fry/devup)
 [![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/sergio-fry/devup)](https://codeclimate.com/github/sergio-fry/devup)
-[![GitHub repo size](https://img.shields.io/github/repo-size/sergio-fry/devup)](https://github.com/sergio-fry/devup/archive/master.zip)
 [![Gem](https://img.shields.io/gem/dt/devup)](https://rubygems.org/gems/devup)
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/devup`. To experiment with that code, run `bin/console` for an interactive prompt.

@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx
+    ports:
+      - "80"
+      - "81:8181"
+
+  pg:
+    image: nginx
+    ports:
+      - "5432"

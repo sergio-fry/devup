@@ -8,7 +8,7 @@ module Devup
     attr_reader :pwd, :compose
 
     def initialize(pwd:, compose: nil)
-      @pwd = pwd.to_s
+      @pwd = pwd.to_s.strip
       @compose = compose || Compose.new(root.join("docker-compose.yml"), project: project)
     end
 

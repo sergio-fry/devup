@@ -1,4 +1,4 @@
-require "devup/environment"
+require "devup"
 
 RSpec.describe Devup do
   it "has a version number" do

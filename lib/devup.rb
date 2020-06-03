@@ -1,4 +1,5 @@
 require "devup/version"
+require "devup/environment"
 
 module Devup
   class Error < StandardError; end

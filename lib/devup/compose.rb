@@ -26,6 +26,10 @@ module Devup
       exec "rm -f"
     end
 
+    def exec(cmd)
+      `docker-compose -p #{project} -f #{path} #{cmd}`
+    end
+
     private
 
     def config
@@ -34,10 +38,6 @@ module Devup
 
     def config_content
       File.read(path)
-    end
-
-    def exec(cmd)
-      `docker-compose -p #{project} -f #{path} #{cmd}`
     end
   end
 end

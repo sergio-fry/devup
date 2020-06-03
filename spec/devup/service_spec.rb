@@ -5,7 +5,7 @@ module Devup
     let(:service) { described_class.new compose, "postgres" }
 
     let(:compose) do
-      double(:compose, service_ports: ["5432"], command: "0.0.0.0:32772")
+      double(:compose, service_ports: ["5432"], exec: "0.0.0.0:32772")
     end
 
     describe "#ports" do

@@ -1,4 +1,4 @@
-# Devup
+# DevUp!
 
 [![Travis (.com) branch](https://img.shields.io/travis/com/sergio-fry/devup/master)](https://travis-ci.com/github/sergio-fry/devup)
 [![Gem](https://img.shields.io/gem/v/devup)](https://rubygems.org/gems/devup)
@@ -6,16 +6,16 @@
 [![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/sergio-fry/devup)](https://codeclimate.com/github/sergio-fry/devup)
 [![Gem](https://img.shields.io/gem/dt/devup)](https://rubygems.org/gems/devup)
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/devup`. To experiment with that code, run `bin/console` for an interactive prompt.
+**DevUp!** is a tool to run dev dependencies.
 
-TODO: Delete this and the text above, and describe your gem
+[![asciicast](https://asciinema.org/a/qAEkBR0K2vzmWmlFyV5FfCiMX.svg)](https://asciinema.org/a/qAEkBR0K2vzmWmlFyV5FfCiMX)
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'devup'
+gem "devup", require: false
 ```
 
 And then execute:

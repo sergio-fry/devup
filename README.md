@@ -8,7 +8,7 @@
 
 **DevUp!** is a tool to run dev dependencies.
 
-[![asciicast](https://asciinema.org/a/qAEkBR0K2vzmWmlFyV5FfCiMX.svg)](https://asciinema.org/a/qAEkBR0K2vzmWmlFyV5FfCiMX)
+![demo](demo.gif)
 
 ## Installation
 

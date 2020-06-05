@@ -32,8 +32,8 @@ module Devup
       end
     end
 
-    describe "#export" do
-      subject { env.export }
+    describe "#env" do
+      subject { env.env }
       before { allow(env).to receive(:vars).and_return(vars) }
       let(:vars) { [{"A" => 1}] }
 

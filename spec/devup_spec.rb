@@ -13,7 +13,7 @@ RSpec.describe Devup do
     devup.up
 
     dotenv = File.read(devup.root.join(".env.services"))
-    expect(dotenv).to include("NGINX_HOST=0.0.0.0")
+    expect(dotenv).to include("export NGINX_HOST=0.0.0.0")
   end
 
   after { devup.down }

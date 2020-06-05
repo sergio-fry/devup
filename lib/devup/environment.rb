@@ -34,10 +34,8 @@ module Devup
       }.flatten
     end
 
-    def export
-      vars.map(&:to_a).map(&:first).map { |k, v|
-        "export #{k}=#{v}"
-      }.join("\n")
+    def env
+      vars.reduce({}, :merge).map { |k, v| "export #{k}=#{v}" }.join("\n")
     end
 
     def up
@@ -72,7 +70,7 @@ module Devup
         #     Home: https://github.com/sergio-fry/devup    #
         ####################################################
         # START
-        #{vars.reduce({}, :merge).map { |k, v| "#{k}=#{v}" }.join("\n")}
+        #{env}
         # END
 
       DOTENV

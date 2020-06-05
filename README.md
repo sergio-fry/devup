@@ -40,17 +40,55 @@ services:
       - "5432"
 ```
 
-Run your application app.rb
+Make youur app to use ENV configs app.rb
 
 ```ruby
 database_url = "postgres://#{ENV["PG_HOST"]}:#{ENV["PG_PORT"]}/db"
 puts database_url
 ```
 
+Run services from docker-compose.yml
+
 ```bash
-$ `devup export` && ruby app.rb
+$ devup 
 ```
 
+
+Load ENV vars from generated .env.services
+
+```bash
+$ source .env.services
+```
+
+
+Now you can run app
+
+```bash
+$ ruby app.rb
+```
+
+
+### Rails
+
+Update your database.yml to use ENV:
+
+```yaml
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: <%= ENV.fetch("POSTGRES_HOST") %>
+  port: <%= ENV.fetch("POSTGRES_PORT") %>
+  username: postgres
+  password:
+
+development:
+  <<: *default
+  database: development
+
+test:
+  <<: *default
+  database: test
+```
 
 
 

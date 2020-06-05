@@ -8,8 +8,6 @@ devup = Devup::Environment.new pwd: `pwd`
 case ARGV[0]
 when "down"
   devup.down
-when "export"
-  puts devup.export
 else
   devup.up
 end

@@ -6,29 +6,91 @@
 [![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/sergio-fry/devup)](https://codeclimate.com/github/sergio-fry/devup)
 [![Gem](https://img.shields.io/gem/dt/devup)](https://rubygems.org/gems/devup)
 
-**DevUp!** is a tool to run dev dependencies.
+**DevUp!** is a tool to run dev dependencies. It builds ENV vars with dynamic exposed ports for services defined in a docker-compose.yml to access from application.
 
 ![demo](demo.gif)
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem "devup", require: false
-```
-
-And then execute:
-
-    $ bundle install
-
-Or install it yourself as:
-
     $ gem install devup
 
 ## Usage
 
-TODO: Write usage instructions here
+
+Create a docker-compose.yml with app dependencies like:
+
+```yaml
+version: '3'
+
+services:
+  postgres:
+    image: postgres
+    ports:
+      - "5432"
+```
+
+Add devup/dotenv to your Gemfile:
+
+    gem "devup"
+
+For each service from docker-compose.yml **DevUp!**  will export ENV variable like
+
+    POSTGRES_HOST=0.0.0.0
+    POSTGRES_PORT=5432
+
+### Rails
+
+
+Update your database.yml to use ENV:
+
+```yaml
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: <%= ENV.fetch("POSTGRES_HOST") %>
+  port: <%= ENV.fetch("POSTGRES_PORT") %>
+  username: postgres
+  password:
+
+development:
+  <<: *default
+  database: development
+
+test:
+  <<: *default
+  database: test
+```
+
+
+You are ready to start rails
+
+    $ bundle exec rake db:create db:migrate
+    $ bundle exec rails server
+
+
+### Without Rails
+
+
+```ruby
+require "devup"
+require "sequel"
+
+DB = Sequel.connect("postgres://postgres@#{ENV.fetch( "POSTGRES_HOST" )}:#{ENV.fetch("POSTGRES_PORT")}/database_name")
+```
+
+
+### Without Ruby (PHP, nodejs, Java, ...)
+
+Start up services
+
+    $ devup
+
+Load ENV vars from generated .env.services
+
+    $ source .env.services
+
+Now you can run app
+
 
 ## Development
 

@@ -3,7 +3,8 @@ require "simplecov"
 SimpleCov.start
 
 require "byebug"
-require "devup"
+
+Root = Pathname.new File.dirname(__dir__)
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

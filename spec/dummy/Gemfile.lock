@@ -1,0 +1,19 @@
+PATH
+  remote: ../..
+  specs:
+    devup (0.1.1)
+      dotenv
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    dotenv (2.7.5)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  devup!
+
+BUNDLED WITH
+   2.1.4

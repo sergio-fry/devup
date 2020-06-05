@@ -34,6 +34,10 @@ module Devup
       }.flatten
     end
 
+    def env
+      vars.reduce({}, :merge).map { |k, v| "export #{k}=#{v}" }.join("\n")
+    end
+
     def up
       compose.up
       write_dotenv
@@ -66,7 +70,7 @@ module Devup
         #     Home: https://github.com/sergio-fry/devup    #
         ####################################################
         # START
-        #{vars.reduce({}, :merge).map { |k, v| "#{k}=#{v}" }.join("\n")}
+        #{env}
         # END
 
       DOTENV

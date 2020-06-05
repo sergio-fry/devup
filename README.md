@@ -6,7 +6,7 @@
 [![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/sergio-fry/devup)](https://codeclimate.com/github/sergio-fry/devup)
 [![Gem](https://img.shields.io/gem/dt/devup)](https://rubygems.org/gems/devup)
 
-**DevUp!** is a tool to run dev dependencies.
+**DevUp!** is a tool to run dev dependencies. It builds ENV vars with dynamic exposed ports for services defined in a docker-compose.yml to access from application.
 
 ![demo](demo.gif)
 
@@ -15,7 +15,7 @@
 Add this line to your application's Gemfile:
 
 ```ruby
-gem "devup", require: false
+gem "devup", group: :development, require: false
 ```
 
 And then execute:
@@ -28,7 +28,31 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Create a docker-compose.yml with app dependencies like:
+
+```yaml
+version: '3'
+
+services:
+  pg:
+    image: postgres
+    ports:
+      - "5432"
+```
+
+Run your application app.rb
+
+```ruby
+database_url = "postgres://#{ENV["PG_HOST"]}:#{ENV["PG_PORT"]}/db"
+puts database_url
+```
+
+```bash
+$ `devup export` && ruby app.rb
+```
+
+
+
 
 ## Development
 

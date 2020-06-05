@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require "devup"
+require "devup/environment"
 
 devup = Devup::Environment.new pwd: `pwd`
 

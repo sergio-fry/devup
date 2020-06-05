@@ -1,4 +1,4 @@
-require 'bundler/setup'
-require 'devup'
+require "bundler/setup"
+require "devup"
 
-puts ENV["PG_HOST"]
+puts ENV["PG_PORT"]

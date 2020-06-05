@@ -34,6 +34,12 @@ module Devup
       }.flatten
     end
 
+    def export
+      vars.map(&:to_a).map(&:first).map { |k, v|
+        "export #{k}=#{v}"
+      }.join("\n")
+    end
+
     def up
       compose.up
       write_dotenv

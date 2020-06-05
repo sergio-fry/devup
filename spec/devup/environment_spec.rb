@@ -31,5 +31,13 @@ module Devup
         it { is_expected.not_to include("NGINX_PORT" => "12345") }
       end
     end
+
+    describe "#export" do
+      subject { env.export }
+      before { allow(env).to receive(:vars).and_return(vars) }
+      let(:vars) { [{"A" => 1}] }
+
+      it { is_expected.to include("export A=1") }
+    end
   end
 end

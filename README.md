@@ -16,6 +16,7 @@
 
 ## Usage
 
+
 Create a docker-compose.yml with app dependencies like:
 
 ```yaml
@@ -28,12 +29,17 @@ services:
       - "5432"
 ```
 
-Run services from docker-compose.yml
+Add devup/dotenv to your Gemfile:
 
-    $ devup 
+    gem "devup"
 
+For each service from docker-compose.yml **DevUp!**  will export ENV variable like
+
+    POSTGRES_HOST=0.0.0.0
+    POSTGRES_PORT=5432
 
 ### Rails
+
 
 Update your database.yml to use ENV:
 
@@ -55,33 +61,35 @@ test:
   database: test
 ```
 
-Add devup/dotenv to your Gemfile:
 
-    gem "devup"
+You are ready to start rails
+
+    $ bundle exec rake db:create db:migrate
+    $ bundle exec rails server
 
 
-### Non Rails
+### Without Rails
 
+
+```ruby
+require "devup"
+require "sequel"
+
+DB = Sequel.connect("postgres://postgres@#{ENV.fetch( "POSTGRES_HOST" )}:#{ENV.fetch("POSTGRES_PORT")}/database_name")
+```
+
+
+### Without Ruby (PHP, nodejs, Java, ...)
+
+Start up services
+
+    $ devup
 
 Load ENV vars from generated .env.services
 
-```bash
-$ source .env.services
-```
-
-Make youur app to use ENV configs app.rb
-
-```ruby
-database_url = "postgres://#{ENV["PG_HOST"]}:#{ENV["PG_PORT"]}/db"
-puts database_url
-```
+    $ source .env.services
 
 Now you can run app
-
-```bash
-$ ruby app.rb
-```
-
 
 
 ## Development

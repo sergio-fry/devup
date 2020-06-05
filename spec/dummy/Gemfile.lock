@@ -1,0 +1,17 @@
+PATH
+  remote: ../..
+  specs:
+    devup (0.1.1)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  devup!
+
+BUNDLED WITH
+   2.1.4

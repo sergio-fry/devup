@@ -12,18 +12,6 @@
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem "devup", group: :development, require: false
-```
-
-And then execute:
-
-    $ bundle install
-
-Or install it yourself as:
-
     $ gem install devup
 
 ## Usage
@@ -34,38 +22,15 @@ Create a docker-compose.yml with app dependencies like:
 version: '3'
 
 services:
-  pg:
+  postgres:
     image: postgres
     ports:
       - "5432"
 ```
 
-Make youur app to use ENV configs app.rb
-
-```ruby
-database_url = "postgres://#{ENV["PG_HOST"]}:#{ENV["PG_PORT"]}/db"
-puts database_url
-```
-
 Run services from docker-compose.yml
 
-```bash
-$ devup 
-```
-
-
-Load ENV vars from generated .env.services
-
-```bash
-$ source .env.services
-```
-
-
-Now you can run app
-
-```bash
-$ ruby app.rb
-```
+    $ devup 
 
 
 ### Rails
@@ -88,6 +53,33 @@ development:
 test:
   <<: *default
   database: test
+```
+
+Add devup/dotenv to your Gemfile:
+
+    gem "devup"
+
+
+### Non Rails
+
+
+Load ENV vars from generated .env.services
+
+```bash
+$ source .env.services
+```
+
+Make youur app to use ENV configs app.rb
+
+```ruby
+database_url = "postgres://#{ENV["PG_HOST"]}:#{ENV["PG_PORT"]}/db"
+puts database_url
+```
+
+Now you can run app
+
+```bash
+$ ruby app.rb
 ```
 
 

@@ -45,9 +45,12 @@ module Devup
         it { is_expected.to include "export REDIS_URL=redis://0.0.0.0:32772" }
       end
 
-      context "when memcached"
-      # MEMCACHE_SERVERS
-      # 11211
+      context "when memcached" do
+        let(:name) { "memcached" }
+        let(:ports) { [double(:port, from: 11211, to: 32772)] }
+
+        it { is_expected.to include "export MEMCACHE_SERVERS=0.0.0.0:32772" }
+      end
 
       context "when mysql" do
         let(:name) { "mysql" }

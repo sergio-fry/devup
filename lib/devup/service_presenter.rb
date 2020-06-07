@@ -53,7 +53,7 @@ module Devup
     end
 
     def magic?
-      %w[postgres redis mysql].include? service.name
+      %w[postgres redis mysql memcached].include? service.name
     end
 
     def magic
@@ -64,6 +64,8 @@ module Devup
         "export DATABASE_URL=mysql2://root@0.0.0.0:#{port_to(3306)}/db"
       when "redis"
         "export REDIS_URL=redis://0.0.0.0:#{port_to(6379)}"
+      when "memcached"
+        "export MEMCACHE_SERVERS=0.0.0.0:#{port_to(11211)}"
       end
     end
 

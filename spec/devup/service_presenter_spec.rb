@@ -29,5 +29,12 @@ module Devup
       it { is_expected.not_to include "NGINX_HOST" }
       it { is_expected.to include "# no exposed ports" }
     end
+
+    context "when postgres" do
+      let(:name) { "postgres" }
+      let(:ports) { [double(:port, from: 5432, to: 32772)] }
+
+      it { is_expected.to include "export DATABASE_URL=postgres://postgres@0.0.0.0:32772/db" }
+    end
   end
 end

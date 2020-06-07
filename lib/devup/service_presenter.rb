@@ -10,6 +10,7 @@ module Devup
       res = []
 
       res << "# #{service.name}"
+      res << magic if magic?
 
       if has_ports?
         res << host_env
@@ -49,6 +50,18 @@ module Devup
 
     def has_ports?
       service.ports.size > 0
+    end
+
+    def magic?
+      %w[postgres].include? service.name
+    end
+
+    def magic
+      "export DATABASE_URL=postgres://postgres@0.0.0.0:#{port_to(5432)}/db"
+    end
+
+    def port_to(from)
+      service.ports.find { |p| p.from == from }&.to
     end
   end
 end

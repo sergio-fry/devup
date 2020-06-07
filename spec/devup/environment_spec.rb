@@ -13,31 +13,23 @@ module Devup
       it { is_expected.to eq "foo" }
     end
 
-    describe "#vars" do
-      subject { env.vars }
+    describe "#env" do
+      subject { env.env }
       let(:compose) { double(:compose, services: services, service_ports: ports) }
       let(:services) { ["nginx"] }
       let(:ports) { ["80"] }
       before { allow(compose).to receive(:exec).with("port nginx 80").and_return("0.0.0.0:12345") }
 
-      it { is_expected.to include("NGINX_HOST" => "0.0.0.0") }
-      it { is_expected.to include("NGINX_PORT" => "12345") }
-      it { is_expected.to include("NGINX_PORT_80" => "12345") }
+      it { is_expected.to include("export NGINX_HOST=0.0.0.0") }
+      it { is_expected.to include("export NGINX_PORT=12345") }
+      it { is_expected.to include("export NGINX_PORT_80=12345") }
 
       context "when service has no exposed ports" do
         let(:ports) { [] }
 
-        it { is_expected.to include("NGINX_HOST" => "0.0.0.0") }
-        it { is_expected.not_to include("NGINX_PORT" => "12345") }
+        it { is_expected.to include("export NGINX_HOST=0.0.0.0") }
+        it { is_expected.not_to include("NGINX_PORT") }
       end
-    end
-
-    describe "#env" do
-      subject { env.env }
-      before { allow(env).to receive(:vars).and_return(vars) }
-      let(:vars) { [{"A" => 1}] }
-
-      it { is_expected.to include("export A=1") }
     end
   end
 end

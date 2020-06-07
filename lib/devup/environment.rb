@@ -43,7 +43,7 @@ module Devup
     end
 
     def service_env(service)
-      ServicePresenter.new(service).call
+      ServicePresenter.new(service, project: project).call
     end
 
     def write_dotenv

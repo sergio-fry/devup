@@ -1,9 +1,10 @@
 module Devup
   class ServicePresenter
-    attr_reader :service
+    attr_reader :service, :project
 
-    def initialize(service)
+    def initialize(service, project: nil)
       @service = service
+      @project = project
     end
 
     def call
@@ -59,9 +60,9 @@ module Devup
     def magic
       case service.name
       when "postgres"
-        "export DATABASE_URL=postgres://postgres@0.0.0.0:#{port_to(5432)}/db"
+        "export DATABASE_URL=postgres://postgres@0.0.0.0:#{port_to(5432)}/#{database_name}"
       when "mysql"
-        "export DATABASE_URL=mysql2://root@0.0.0.0:#{port_to(3306)}/db"
+        "export DATABASE_URL=mysql2://root@0.0.0.0:#{port_to(3306)}/#{database_name}"
       when "redis"
         "export REDIS_URL=redis://0.0.0.0:#{port_to(6379)}"
       when "memcached"
@@ -71,6 +72,17 @@ module Devup
 
     def port_to(from)
       service.ports.find { |p| p.from == from }&.to
+    end
+
+    def database_name
+      if defined? Rails
+        [
+          project,
+          Rails.env
+        ].join("_")
+      else
+        "db"
+      end
     end
   end
 end

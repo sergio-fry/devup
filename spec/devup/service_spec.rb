@@ -15,8 +15,8 @@ module Devup
 
       describe "port" do
         subject { ports.first }
-        it { expect(subject.from).to eq "5432" }
-        it { expect(subject.to).to eq "32772" }
+        it { expect(subject.from).to eq 5432 }
+        it { expect(subject.to).to eq 32772 }
       end
     end
   end

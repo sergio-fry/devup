@@ -17,21 +17,7 @@ module Devup
     end
 
     def env
-      res = []
-
-      compose.services.map { |name| Service.new(compose, name) }.each do |service|
-        res << "export #{service.name.upcase}_HOST=0.0.0.0"
-
-        if service.ports.size > 0
-          res << "export #{service.name.upcase}_PORT=#{service.ports.first.to}"
-
-          service.ports.each do |port|
-            res << "export #{service.name.upcase}_PORT_#{port.from}=#{port.to}"
-          end
-        end
-      end
-
-      res.join("\n")
+      compose.services.map { |name| Service.new(compose, name) }.map { |s| service_env(s) }.join("\n")
     end
 
     def up
@@ -50,6 +36,22 @@ module Devup
     end
 
     private
+
+    def service_env(service)
+      res = []
+
+      res << "export #{service.name.upcase}_HOST=0.0.0.0"
+
+      if service.ports.size > 0
+        res << "export #{service.name.upcase}_PORT=#{service.ports.first.to}"
+
+        service.ports.each do |port|
+          res << "export #{service.name.upcase}_PORT_#{port.from}=#{port.to}"
+        end
+      end
+
+      res.join "\n"
+    end
 
     def write_dotenv
       File.open(root.join(".env.services"), "w") { |f| f.write dotenv }

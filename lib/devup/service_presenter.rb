@@ -1,0 +1,54 @@
+module Devup
+  class ServicePresenter
+    attr_reader :service
+
+    def initialize(service)
+      @service = service
+    end
+
+    def call
+      res = []
+
+      res << "# #{service.name}"
+
+      if has_ports?
+        res << host_env
+        res << ports_env
+      else
+        res << "# no exposed ports"
+      end
+
+      res.join "\n"
+    end
+
+    private
+
+    def host_env
+      "export #{service.name.upcase}_HOST=0.0.0.0"
+    end
+
+    def ports_env
+      res = []
+
+      res << port_env(to: service.ports.first.to) if service.ports.size == 1
+
+      service.ports.each do |port|
+        res << port_env(from: port.from, to: port.to)
+      end
+
+      res.join "\n"
+    end
+
+    def port_env(from: nil, to:)
+      if from.nil?
+        "export #{service.name.upcase}_PORT=#{to}"
+      else
+        "export #{service.name.upcase}_PORT_#{from}=#{to}"
+      end
+    end
+
+    def has_ports?
+      service.ports.size > 0
+    end
+  end
+end

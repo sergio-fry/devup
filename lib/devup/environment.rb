@@ -2,6 +2,7 @@ require "yaml"
 
 require "devup/compose"
 require "devup/service"
+require "devup/service_presenter"
 
 module Devup
   class Environment
@@ -16,26 +17,8 @@ module Devup
       pwd.split("/")[-1].strip
     end
 
-    def vars
-      compose.services.map { |name| Service.new(compose, name) }.map { |service|
-        res = []
-
-        res << {"#{service.name}_HOST".upcase => "0.0.0.0"}
-
-        if service.ports.size > 0
-          res << {"#{service.name}_PORT".upcase => service.ports.first.to}
-
-          service.ports.each do |port|
-            res << {"#{service.name}_PORT_#{port.from}".upcase => port.to}
-          end
-        end
-
-        res
-      }.flatten
-    end
-
     def env
-      vars.reduce({}, :merge).map { |k, v| "export #{k}=#{v}" }.join("\n")
+      compose.services.map { |name| Service.new(compose, name) }.map { |s| service_env(s) }.join("\n\n")
     end
 
     def up
@@ -55,6 +38,10 @@ module Devup
 
     private
 
+    def service_env(service)
+      ServicePresenter.new(service).call
+    end
+
     def write_dotenv
       File.open(root.join(".env.services"), "w") { |f| f.write dotenv }
     end
@@ -70,7 +57,9 @@ module Devup
         #     Home: https://github.com/sergio-fry/devup    #
         ####################################################
         # START
+
         #{env}
+
         # END
 
       DOTENV

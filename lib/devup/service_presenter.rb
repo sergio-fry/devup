@@ -53,11 +53,18 @@ module Devup
     end
 
     def magic?
-      %w[postgres].include? service.name
+      %w[postgres redis mysql].include? service.name
     end
 
     def magic
-      "export DATABASE_URL=postgres://postgres@0.0.0.0:#{port_to(5432)}/db"
+      case service.name
+      when "postgres"
+        "export DATABASE_URL=postgres://postgres@0.0.0.0:#{port_to(5432)}/db"
+      when "mysql"
+        "export DATABASE_URL=mysql2://root@0.0.0.0:#{port_to(3306)}/db"
+      when "redis"
+        "export REDIS_URL=redis://0.0.0.0:#{port_to(6379)}"
+      end
     end
 
     def port_to(from)

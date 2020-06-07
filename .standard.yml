@@ -1,0 +1,2 @@
+ignore:
+  - 'spec/dummy_rails/**/*'

@@ -6,18 +6,19 @@ module Devup
       @service = service
     end
 
-    TEMPLATE = <<~ERB
-      <% if has_ports? %>
-      # <%= service.name %>
-      <%= host_env %>
-      <%= ports_env %>
-      <% else %>
-      # <%= service.name %> has no exposed ports
-      <% end %>
-    ERB
-
     def call
-      ERB.new(TEMPLATE).result binding
+      res = []
+
+      res << "# #{service.name}"
+
+      if has_ports?
+        res << host_env
+        res << ports_env
+      else
+        res << "# no exposed ports"
+      end
+
+      res.join "\n"
     end
 
     private
@@ -29,12 +30,10 @@ module Devup
     def ports_env
       res = []
 
-      if service.ports.size == 1
-        res << port_env(to: service.ports.first.to)
-      else
-        service.ports.each do |port|
-          res << port_env(from: port.from, to: port.to)
-        end
+      res << port_env(to: service.ports.first.to) if service.ports.size == 1
+
+      service.ports.each do |port|
+        res << port_env(from: port.from, to: port.to)
       end
 
       res.join "\n"

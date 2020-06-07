@@ -18,7 +18,7 @@ module Devup
     end
 
     def env
-      compose.services.map { |name| Service.new(compose, name) }.map { |s| service_env(s) }.join("\n")
+      compose.services.map { |name| Service.new(compose, name) }.map { |s| service_env(s) }.join("\n\n")
     end
 
     def up
@@ -57,7 +57,9 @@ module Devup
         #     Home: https://github.com/sergio-fry/devup    #
         ####################################################
         # START
+
         #{env}
+
         # END
 
       DOTENV

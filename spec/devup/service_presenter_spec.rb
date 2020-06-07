@@ -13,6 +13,7 @@ module Devup
     end
 
     it { is_expected.to include "export NGINX_HOST=0.0.0.0" }
+    it { is_expected.to include "export NGINX_PORT_80=32772" }
     it { is_expected.to include "export NGINX_PORT=32772" }
 
     context "when multiple ports" do
@@ -26,7 +27,7 @@ module Devup
     context "when no ports" do
       let(:ports) { [] }
       it { is_expected.not_to include "NGINX_HOST" }
-      it { is_expected.to include "# nginx has no exposed ports" }
+      it { is_expected.to include "# no exposed ports" }
     end
   end
 end

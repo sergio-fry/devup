@@ -15,5 +15,6 @@
 .vimrc
 
 spec/dummy/.env.services
+spec/dummy_rails/.env.services
 
 devup-*.gem

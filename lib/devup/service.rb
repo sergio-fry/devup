@@ -12,8 +12,8 @@ module Devup
     def ports
       compose.service_ports(name).map { |el| el.to_s.split(":")[-1] }.map do |from|
         OpenStruct.new(
-          from: from,
-          to: compose.exec("port #{name} #{from}").split(":")[-1].strip
+          from: from.to_i,
+          to: compose.exec("port #{name} #{from}").split(":")[-1].strip.to_i
         )
       end
     end

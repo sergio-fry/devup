@@ -1,3 +1,9 @@
+PATH
+  remote: ../..
+  specs:
+    devup (0.2.0)
+      dotenv
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -74,6 +80,8 @@ GEM
     childprocess (3.0.0)
     concurrent-ruby (1.1.6)
     crass (1.0.6)
+    dalli (2.7.10)
+    dotenv (2.7.5)
     erubi (1.9.0)
     ffi (1.13.0)
     globalid (0.4.2)
@@ -140,6 +148,7 @@ GEM
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    redis (4.1.4)
     regexp_parser (1.7.0)
     rubyzip (2.3.0)
     sass-rails (6.0.0)
@@ -201,11 +210,14 @@ DEPENDENCIES
   bootsnap (>= 1.4.2)
   byebug
   capybara (>= 2.15)
+  dalli
+  devup!
   jbuilder (~> 2.7)
   listen (~> 3.2)
   pg (>= 0.18, < 2.0)
   puma (~> 4.1)
   rails (~> 6.0.3, >= 6.0.3.1)
+  redis
   sass-rails (>= 6)
   selenium-webdriver
   spring

@@ -2,6 +2,7 @@ require "yaml"
 
 require "devup/compose"
 require "devup/service"
+require "devup/service_presenter"
 
 module Devup
   class Environment
@@ -38,19 +39,7 @@ module Devup
     private
 
     def service_env(service)
-      res = []
-
-      res << "export #{service.name.upcase}_HOST=0.0.0.0"
-
-      if service.ports.size > 0
-        res << "export #{service.name.upcase}_PORT=#{service.ports.first.to}"
-
-        service.ports.each do |port|
-          res << "export #{service.name.upcase}_PORT_#{port.from}=#{port.to}"
-        end
-      end
-
-      res.join "\n"
+      ServicePresenter.new(service).call
     end
 
     def write_dotenv

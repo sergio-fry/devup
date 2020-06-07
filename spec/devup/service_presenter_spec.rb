@@ -12,12 +12,21 @@ module Devup
       expect(subject).to include text.strip
     end
 
-    it {
-      should_include <<~TXT
-        export NGINX_HOST=0.0.0.0
-        export NGINX_PORT=32772
-        export NGINX_PORT_80=32772
-      TXT
-    }
+    it { is_expected.to include "export NGINX_HOST=0.0.0.0" }
+    it { is_expected.to include "export NGINX_PORT=32772" }
+
+    context "when multiple ports" do
+      let(:ports) { [double(:port, from: 80, to: 12345), double(:port, from: 433, to: 23456)] }
+
+      it { is_expected.to include "export NGINX_HOST=0.0.0.0" }
+      it { is_expected.to include "export NGINX_PORT_80=12345" }
+      it { is_expected.to include "export NGINX_PORT_433=23456" }
+    end
+
+    context "when no ports" do
+      let(:ports) { [] }
+      it { is_expected.not_to include "NGINX_HOST" }
+      it { is_expected.to include "# nginx has no exposed ports" }
+    end
   end
 end

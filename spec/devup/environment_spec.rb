@@ -22,12 +22,10 @@ module Devup
 
       it { is_expected.to include("export NGINX_HOST=0.0.0.0") }
       it { is_expected.to include("export NGINX_PORT=12345") }
-      it { is_expected.to include("export NGINX_PORT_80=12345") }
 
       context "when service has no exposed ports" do
         let(:ports) { [] }
 
-        it { is_expected.to include("export NGINX_HOST=0.0.0.0") }
         it { is_expected.not_to include("NGINX_PORT") }
       end
     end

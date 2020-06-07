@@ -17,7 +17,21 @@ module Devup
     end
 
     def env
-      vars.reduce({}, :merge).map { |k, v| "export #{k}=#{v}" }.join("\n")
+      res = []
+
+      compose.services.map { |name| Service.new(compose, name) }.each do |service|
+        res << "export #{service.name.upcase}_HOST=0.0.0.0"
+
+        if service.ports.size > 0
+          res << "export #{service.name.upcase}_PORT=#{service.ports.first.to}"
+
+          service.ports.each do |port|
+            res << "export #{service.name.upcase}_PORT_#{port.from}=#{port.to}"
+          end
+        end
+      end
+
+      res.join("\n")
     end
 
     def up
@@ -36,24 +50,6 @@ module Devup
     end
 
     private
-
-    def vars
-      compose.services.map { |name| Service.new(compose, name) }.map { |service|
-        res = []
-
-        res << {"#{service.name}_HOST".upcase => "0.0.0.0"}
-
-        if service.ports.size > 0
-          res << {"#{service.name}_PORT".upcase => service.ports.first.to}
-
-          service.ports.each do |port|
-            res << {"#{service.name}_PORT_#{port.from}".upcase => port.to}
-          end
-        end
-
-        res
-      }.flatten
-    end
 
     def write_dotenv
       File.open(root.join(".env.services"), "w") { |f| f.write dotenv }

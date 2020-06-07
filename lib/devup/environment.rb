@@ -18,7 +18,7 @@ module Devup
     end
 
     def env
-      compose.services.map { |name| Service.new(compose, name) }.map { |s| service_env(s) }.join("\n\n")
+      services.map { |s| service_env(s) }.join("\n\n")
     end
 
     def up
@@ -37,6 +37,10 @@ module Devup
     end
 
     private
+
+    def services
+      @services ||= compose.services.map { |name| Service.new(compose, name) }
+    end
 
     def service_env(service)
       ServicePresenter.new(service).call

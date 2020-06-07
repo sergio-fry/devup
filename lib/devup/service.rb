@@ -10,6 +10,12 @@ module Devup
     end
 
     def ports
+      @ports ||= fetch_ports
+    end
+
+    private
+
+    def fetch_ports
       compose.service_ports(name).map { |el| el.to_s.split(":")[-1] }.map do |from|
         OpenStruct.new(
           from: from.to_i,

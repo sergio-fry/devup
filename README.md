@@ -94,6 +94,12 @@ Or load ENV vars manually
 
 Now you can run app
 
+## How To
+
+### Disable **DevUp!**
+
+If you don't want devup to setup your dev services, you can disable it by using `DEVUP_ENABLED=false`. Just add it to .env.local file.
+
 
 ## Development
 

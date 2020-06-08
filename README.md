@@ -1,91 +1,94 @@
-# DevUp!
+# DevUp!  [![Travis (.com) branch](https://img.shields.io/travis/com/sergio-fry/devup/master)](https://travis-ci.com/github/sergio-fry/devup) [![Gem](https://img.shields.io/gem/v/devup)](https://rubygems.org/gems/devup) [![Code Climate coverage](https://img.shields.io/codeclimate/coverage/sergio-fry/devup)](https://codeclimate.com/github/sergio-fry/devup) [![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/sergio-fry/devup)](https://codeclimate.com/github/sergio-fry/devup) [![Gem](https://img.shields.io/gem/dt/devup)](https://rubygems.org/gems/devup)
 
-[![Travis (.com) branch](https://img.shields.io/travis/com/sergio-fry/devup/master)](https://travis-ci.com/github/sergio-fry/devup)
-[![Gem](https://img.shields.io/gem/v/devup)](https://rubygems.org/gems/devup)
-[![Code Climate coverage](https://img.shields.io/codeclimate/coverage/sergio-fry/devup)](https://codeclimate.com/github/sergio-fry/devup)
-[![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/sergio-fry/devup)](https://codeclimate.com/github/sergio-fry/devup)
-[![Gem](https://img.shields.io/gem/dt/devup)](https://rubygems.org/gems/devup)
+Describe development dependencies with docker-compose. It is not required to remember any fancy command to start docker. Just start developing your app. Rails is a first-class citizen, but could be used without ruby.
 
-**DevUp!** is a tool to run dev dependencies. It builds ENV vars with dynamic exposed ports for services defined in a docker-compose.yml to access from application.
 
-![demo](demo.gif)
+## Requirements
 
-## Installation
+* Docker (>= 19.03.8)
+* Docker Compose (>= 1.25.5)
 
-    $ gem install devup
 
-## Usage
 
+## Rails
 
 Create a docker-compose.yml with app dependencies like:
 
 ```yaml
-version: '3'
+version: "3"
 
 services:
   postgres:
-    image: postgres
+    image: postgres:10-alpine
     ports:
       - "5432"
 ```
 
-Add devup/dotenv to your Gemfile:
+Add **DevUp!** to your Gemfile
 
-    gem "devup"
+```ruby
+gem "devup", group: [:development, :test]
+```
 
-For each service from docker-compose.yml **DevUp!**  will export ENV variable like
+and
 
-    POSTGRES_HOST=0.0.0.0
-    POSTGRES_PORT=5432
-
-### Rails
+    bundle install
 
 
 Update your database.yml to use ENV:
 
 ```yaml
-default: &default
-  adapter: postgresql
-  encoding: unicode
-  host: <%= ENV.fetch("POSTGRES_HOST") %>
-  port: <%= ENV.fetch("POSTGRES_PORT") %>
-  username: postgres
-  password:
+test:
+  url: <%= ENV.fetch("DATABASE_URL") %>
 
 development:
-  <<: *default
-  database: development
+  url: <%= ENV.fetch("DATABASE_URL") %>
 
-test:
-  <<: *default
-  database: test
 ```
 
 
-You are ready to start rails
+You are ready to use rails with PostgreSQL configured
 
     $ bundle exec rake db:create db:migrate
+    Creating blog_postgres_1 ... done
+    Created database 'blog_development'
+
     $ bundle exec rails server
 
 
-### Without Rails
+## Without Rails
+
+ENV vars from .env.services are loaded with dotenv automatically.
 
 
 ```ruby
 require "devup"
 require "sequel"
 
-DB = Sequel.connect("postgres://postgres@#{ENV.fetch( "POSTGRES_HOST" )}:#{ENV.fetch("POSTGRES_PORT")}/database_name")
+DB = Sequel.connect(ENV.fetch("DATABASE_URL"))
 ```
 
 
-### Without Ruby (PHP, nodejs, Java, ...)
+## Without Ruby (PHP, nodejs, Java, ...)
 
 Start up services
 
     $ devup
+    dummy_rails_postgres_1 is up-to-date
+    dummy_rails_redis_1 is up-to-date
+    dummy_rails_memcached_1 is up-to-date
 
-Load ENV vars from generated .env.services
+    $ cat .env.services
+    export POSTGRES_HOST=0.0.0.0
+    export POSTGRES_PORT=32944
+    export POSTGRES_PORT_5432=32944
+    export MEMCACHED_HOST=0.0.0.0
+    export MEMCACHED_PORT=32943
+    ...
+
+Use your favourite dotenv extension to load vars from .env.services ([node-dotenv](https://www.npmjs.com/package/dotenv), [python-dotenv](https://pypi.org/project/python-dotenv/), [phpdotenv](https://github.com/vlucas/phpdotenv), ...)
+
+Or load ENV vars manually
 
     $ source .env.services
 

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    devup (0.3.1)
+    devup (0.3.2)
       dotenv
 
 GEM

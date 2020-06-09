@@ -11,7 +11,7 @@ module Devup
 
     def initialize(pwd:, compose: nil, logger: Logger.default)
       @pwd = pwd.to_s.strip
-      @compose = compose || Compose.new(root.join("docker-compose.devup.yml"), project: project)
+      @compose = compose || Compose.new(root.join("docker-compose.devup.yml"), project: project, logger: logger)
       @logger = logger
     end
 
@@ -51,6 +51,8 @@ module Devup
 
     def check
       return false if missing_config
+
+      compose.check
 
       true
     end

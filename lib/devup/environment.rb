@@ -61,8 +61,8 @@ module Devup
       service.ports.each { |port| wait_port(service, port) }
     end
 
-    PORT_TIMEOUT = 5
-    PORT_WAIT_TIME = 1
+    PORT_TIMEOUT = 10
+    PORT_WAIT_TIME = 0.1
 
     def wait_port(service, port)
       Timeout.timeout(PORT_TIMEOUT) do

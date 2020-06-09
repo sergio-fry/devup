@@ -24,24 +24,24 @@ module Devup
     end
 
     def up
-      logger.info "DevUp! is starting up services..."
+      logger.info "starting up..."
       check
       compose.up
       write_dotenv
-      logger.info "DevUp! is up"
+      logger.info "up"
     rescue
       clear_dotenv
-      logger.info "DevUp! halted"
+      logger.info "halted"
     end
 
     def down
-      logger.info "DevUp! is shutting down services..."
+      logger.info "shutting down..."
       compose.stop
       compose.rm
       clear_dotenv
-      logger.info "DevUp! is down"
+      logger.info "down"
     rescue
-      logger.info "DevUp! halted"
+      logger.info "halted"
     end
 
     def root

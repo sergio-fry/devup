@@ -7,7 +7,7 @@ RSpec.describe Devup do
 
   let(:docker_compose_path) { Root.join("spec/dummy/docker-compose.yml") }
 
-  let(:devup) { Devup::Environment.new pwd: Root.join("spec/dummy"), logger: logger }
+  let(:devup) { Devup::Environment.new pwd: Root.join("spec/dummy") }
   let(:logger) { double(:logger, info: nil, error: nil, debug: true) }
 
   it "works" do

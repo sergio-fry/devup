@@ -29,8 +29,7 @@ module Devup
       compose.up
       write_dotenv
       logger.info "DevUp! is up"
-
-    rescue StandardError
+    rescue
       clear_dotenv
       logger.info "DevUp! halted"
     end
@@ -41,8 +40,7 @@ module Devup
       compose.rm
       clear_dotenv
       logger.info "DevUp! is down"
-
-    rescue StandardError
+    rescue
       logger.info "DevUp! halted"
     end
 

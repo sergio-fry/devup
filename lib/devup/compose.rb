@@ -16,7 +16,7 @@ module Devup
     def check
       _output, status = safe_exec("docker-compose -v")
 
-      status
+      raise Error, "Command docker-compose is not installed" unless status
     end
 
     def services

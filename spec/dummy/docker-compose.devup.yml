@@ -8,6 +8,6 @@ services:
       - "433"
 
   pg:
-    image: nginx
+    image: postgres:9.2
     ports:
       - "5432"

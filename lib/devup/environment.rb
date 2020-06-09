@@ -25,14 +25,14 @@ module Devup
 
     def up
       logger.info "DevUp! is starting up services..."
-      if check
-        compose.up
-        write_dotenv
-        logger.info "DevUp! is up"
-      else
-        clear_dotenv
-        logger.info "DevUp! halted"
-      end
+      check
+      compose.up
+      write_dotenv
+      logger.info "DevUp! is up"
+      clear_dotenv
+
+    rescue StandardError
+      logger.info "DevUp! halted"
     end
 
     def down
@@ -41,6 +41,9 @@ module Devup
       compose.rm
       clear_dotenv
       logger.info "DevUp! is down"
+
+    rescue StandardError
+      logger.info "DevUp! halted"
     end
 
     def root

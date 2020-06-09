@@ -5,6 +5,8 @@ module Devup
   class Compose
     attr_reader :path, :project, :logger
 
+    class Error < StandardError; end
+
     def initialize(path, project: "devup", logger:)
       @path = path
       @project = project
@@ -40,7 +42,9 @@ module Devup
     def exec(cmd)
       output, status = safe_exec "docker-compose -p #{project} -f #{path} #{cmd}"
 
-      output if status
+      raise(Error) unless status
+
+      output
     end
 
     private

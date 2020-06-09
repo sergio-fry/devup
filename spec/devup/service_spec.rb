@@ -1,11 +1,12 @@
 require "devup/service"
+require "devup/port"
 
 module Devup
   RSpec.describe Service do
     let(:service) { described_class.new compose, "postgres" }
 
     let(:compose) do
-      double(:compose, service_ports: ["5432"], exec: "0.0.0.0:32772")
+      double(:compose, service_ports: [Port.new(from: 5432, to: 32772)])
     end
 
     describe "#ports" do

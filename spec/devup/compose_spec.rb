@@ -32,8 +32,18 @@ module Devup
     end
 
     describe "#service_ports" do
-      it { expect(compose.service_ports("nginx")).to eq ["80", "81:8181"] }
-      it { expect(compose.service_ports("postgres")).to eq ["5432"] }
+      before do
+        allow(compose).to receive(:exec).with("ps").and_return <<~OUT
+                Name               Command          State                      Ports
+          ---------------------------------------------------------------------------------------------
+          devup_nginx_1      nginx -g daemon off;   Up      0.0.0.0:33143->80/tcp, 0.0.0.0:81->8181/tcp
+          devup_postgres_1   nginx -g daemon off;   Up      0.0.0.0:33144->5432/tcp, 80/tcp
+        OUT
+      end
+
+      it { expect(compose.service_ports("nginx")).to include({80 => 33143}) }
+      it { expect(compose.service_ports("nginx")).to include({81 => 8181}) }
+      it { expect(compose.service_ports("postgres")).to include({5432 => 33144}) }
     end
   end
 end

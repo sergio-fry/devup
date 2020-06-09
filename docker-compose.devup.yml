@@ -1,8 +1,13 @@
 version: '3'
 
 services:
+  nginx:
+    image: nginx
+    ports:
+      - "80"
+      - "81:8181"
+
   postgres:
-    image: postgres:11
+    image: nginx
     ports:
       - "5432"
-

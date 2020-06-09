@@ -1,6 +1,8 @@
 require "yaml"
 require "open3"
 
+require "devup/port"
+
 module Devup
   class Compose
     attr_reader :path, :project, :logger
@@ -24,7 +26,13 @@ module Devup
     end
 
     def service_ports(name)
-      config["services"][name]["ports"]
+      puts mappings.inspect
+      config["services"][name]["ports"].map { |el| el.to_s.split(":")[-1] }.map do |from|
+        Port.new(
+          from: from.to_i,
+          to: exec("port #{name} #{from}").split(":")[-1].strip.to_i
+        )
+      end
     end
 
     def up
@@ -48,6 +56,15 @@ module Devup
     end
 
     private
+
+    def mappings
+      out = exec "ps"
+
+      full = out.scan /\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:(\d+)->(\d+)\/tcp/
+      short = out.scan(/\s(\d+)\/tcp/).map { |el| el * 2 }
+
+      full + short
+    end
 
     def safe_exec(cmd)
       output, error, status = Open3.capture3(cmd + ";")

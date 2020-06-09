@@ -28,7 +28,7 @@ module Devup
     end
 
     def up
-      exec "up -d --remove-orphans"
+      exec "up -d --remove-orphans --renew-anon-volumes"
     end
 
     def stop

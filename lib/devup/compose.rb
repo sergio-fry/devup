@@ -3,11 +3,18 @@ require "open3"
 
 module Devup
   class Compose
-    attr_reader :path, :project
+    attr_reader :path, :project, :logger
 
-    def initialize(path, project: "devup")
+    def initialize(path, project: "devup", logger:)
       @path = path
       @project = project
+      @logger = logger
+    end
+
+    def check
+      _output, status = safe_exec("docker-compose -v")
+
+      status
     end
 
     def services
@@ -31,16 +38,20 @@ module Devup
     end
 
     def exec(cmd)
-      output = nil
+      output, status = safe_exec "docker-compose -p #{project} -f #{path} #{cmd}"
 
-      Open3.popen3("docker-compose -p #{project} -f #{path} #{cmd}") do |stdin, stdout, stderr, thread|
-        output = stdout.read.chomp
-      end
-
-      output
+      output if status
     end
 
     private
+
+    def safe_exec(cmd)
+      output, error, status = Open3.capture3(cmd + ";")
+
+      logger.error(error) unless status.success?
+
+      [output, status.success?]
+    end
 
     def config
       YAML.safe_load(config_content)

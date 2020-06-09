@@ -11,7 +11,7 @@ module Devup
 
     def initialize(pwd:, compose: nil, logger: Logger.default)
       @pwd = pwd.to_s.strip
-      @compose = compose || Compose.new(root.join("docker-compose.yml"), project: project)
+      @compose = compose || Compose.new(root.join("docker-compose.devup.yml"), project: project, logger: logger)
       @logger = logger
     end
 
@@ -25,9 +25,14 @@ module Devup
 
     def up
       logger.info "DevUp! is starting up services..."
-      compose.up
-      write_dotenv
-      logger.info "DevUp! is up"
+      if check
+        compose.up
+        write_dotenv
+        logger.info "DevUp! is up"
+      else
+        clear_dotenv
+        logger.info "DevUp! halted"
+      end
     end
 
     def down
@@ -43,6 +48,24 @@ module Devup
     end
 
     private
+
+    def check
+      return false if missing_config
+
+      compose.check
+
+      true
+    end
+
+    def missing_config
+      if File.exist?(compose.path)
+        false
+      else
+        logger.error "missing #{compose.path}"
+
+        true
+      end
+    end
 
     def services
       @services ||= compose.services.map { |name| Service.new(compose, name) }

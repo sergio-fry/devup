@@ -12,7 +12,7 @@ Describe development dependencies with docker-compose. It is not required to rem
 
 ## Rails
 
-Create a docker-compose.yml with app dependencies like:
+Create a docker-compose.devup.yml with app dependencies like:
 
 ```yaml
 version: "3"

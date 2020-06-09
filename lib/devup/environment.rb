@@ -1,16 +1,18 @@
 require "yaml"
 
+require "devup/logger"
 require "devup/compose"
 require "devup/service"
 require "devup/service_presenter"
 
 module Devup
   class Environment
-    attr_reader :pwd, :compose
+    attr_reader :pwd, :compose, :logger
 
-    def initialize(pwd:, compose: nil)
+    def initialize(pwd:, compose: nil, logger: Logger.default)
       @pwd = pwd.to_s.strip
       @compose = compose || Compose.new(root.join("docker-compose.yml"), project: project)
+      @logger = logger
     end
 
     def project
@@ -22,14 +24,18 @@ module Devup
     end
 
     def up
+      logger.info "DevUp! is starting up services..."
       compose.up
       write_dotenv
+      logger.info "DevUp! is up"
     end
 
     def down
+      logger.info "DevUp! is shutting down services..."
       compose.stop
       compose.rm
       clear_dotenv
+      logger.info "DevUp! is down"
     end
 
     def root

@@ -1,4 +1,5 @@
 require "yaml"
+require "open3"
 
 module Devup
   class Compose
@@ -30,7 +31,13 @@ module Devup
     end
 
     def exec(cmd)
-      `docker-compose -p #{project} -f #{path} #{cmd}`
+      output = nil
+
+      Open3.popen3("docker-compose -p #{project} -f #{path} #{cmd}") do |stdin, stdout, stderr, thread|
+        output = stdout.read.chomp
+      end
+
+      output
     end
 
     private

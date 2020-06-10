@@ -12,7 +12,6 @@ module Devup
 
       true
     rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
-
       false
     end
   end

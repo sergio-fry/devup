@@ -4,9 +4,9 @@ module Devup
   RSpec.describe Service do
     let(:service) { described_class.new compose, "postgres" }
 
-    let(:compose) do
-      double(:compose, service_ports: ["5432"], exec: "0.0.0.0:32772")
-    end
+    let(:compose) { double :compose }
+    before { allow(compose).to receive(:service_ports).with("postgres").and_return([5432]) }
+    before { allow(compose).to receive(:port_mapping).with("postgres", 5432).and_return(32772) }
 
     describe "#ports" do
       subject(:ports) { service.ports }

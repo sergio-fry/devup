@@ -16,10 +16,10 @@ module Devup
     private
 
     def fetch_ports
-      compose.service_ports(name).map { |el| el.to_s.split(":")[-1] }.map do |from|
+      compose.service_ports(name).map do |from|
         OpenStruct.new(
-          from: from.to_i,
-          to: compose.exec("port #{name} #{from}").split(":")[-1].strip.to_i
+          from: from,
+          to: compose.port_mapping(name, from)
         )
       end
     end

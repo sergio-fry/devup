@@ -14,6 +14,7 @@
 # Editor config
 .vimrc
 
+.env.services
 spec/dummy/.env.services
 spec/dummy_rails/.env.services
 

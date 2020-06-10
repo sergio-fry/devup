@@ -9,7 +9,7 @@ RSpec.describe Devup do
   let(:docker_compose_path) { Root.join("spec/dummy/docker-compose.yml") }
 
   let(:devup) { Devup::Environment.new pwd: Root.join("spec/dummy"), logger: logger }
-  let(:logger) { Support::LoggerFactory.call(::Logger::DEBUG) }
+  let(:logger) { Support::LoggerFactory.call }
 
   it "works" do
     devup.up

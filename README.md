@@ -100,6 +100,10 @@ Now you can run app
 
 If you don't want devup to setup your dev services, you can disable it by using `DEVUP_ENABLED=false`. Just add it to .env.local file.
 
+### Debug
+
+    export DEVUP_LOG_LEVEL=debug
+    devup
 
 ## Development
 

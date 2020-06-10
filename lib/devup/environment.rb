@@ -10,7 +10,7 @@ module Devup
   class Environment
     attr_reader :pwd, :compose, :logger, :port_checker
 
-    def initialize(pwd:, compose: nil, logger: Logger.default, port_checker: PortChecker.new)
+    def initialize(pwd:, compose: nil, logger: Logger.build, port_checker: PortChecker.new)
       @pwd = pwd.to_s.strip
       @compose = compose || Compose.new(root.join("docker-compose.devup.yml"), project: project, logger: logger)
       @logger = logger

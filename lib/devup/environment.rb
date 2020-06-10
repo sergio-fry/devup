@@ -4,17 +4,17 @@ require "devup/logger"
 require "devup/compose"
 require "devup/service"
 require "devup/service_presenter"
-require "devup/port_checker"
+require "devup/shell"
 
 module Devup
   class Environment
-    attr_reader :pwd, :compose, :logger, :port_checker
+    attr_reader :pwd, :logger, :shell
 
-    def initialize(pwd:, compose: nil, logger: Logger.default, port_checker: PortChecker.new)
+    def initialize(pwd:, compose: nil, logger: Logger.build, shell: Shell.new(pwd: pwd, logger: logger))
       @pwd = pwd.to_s.strip
-      @compose = compose || Compose.new(root.join("docker-compose.devup.yml"), project: project, logger: logger)
+      @compose = compose
       @logger = logger
-      @port_checker = port_checker
+      @shell = shell
     end
 
     def project
@@ -29,12 +29,12 @@ module Devup
       logger.info "starting up..."
       check
       compose.up
-      wait_services
       write_dotenv
       logger.info "up"
-    rescue
+    rescue => ex
       clear_dotenv
-      logger.info "halted"
+      logger.debug ex
+      logger.error "halted"
     end
 
     def down
@@ -43,7 +43,8 @@ module Devup
       compose.rm
       clear_dotenv
       logger.info "down"
-    rescue
+    rescue => ex
+      logger.debug ex
       logger.info "halted"
     end
 
@@ -52,37 +53,6 @@ module Devup
     end
 
     private
-
-    def wait_services
-      services.each { |service| wait_service(service) }
-    end
-
-    def wait_service(service)
-      service.ports.each { |port| wait_port(service, port) }
-    end
-
-    PORT_TIMEOUT = 5
-    PORT_WAIT_TIME = 1
-
-    def wait_port(service, port)
-      Timeout.timeout(PORT_TIMEOUT) do
-        loop do
-          logger.debug "wait #{service.name} port #{port.from}"
-
-          if port_checker.call(port.to)
-            logger.debug "connected to #{port.from}"
-            break
-          else
-            logger.debug "failed to connect #{port.from}"
-          end
-
-          sleep PORT_WAIT_TIME
-        end
-      end
-    rescue Timeout::Error
-      logger.error "failed to connect #{port.from}"
-      raise
-    end
 
     def check
       raise if missing_config
@@ -128,6 +98,15 @@ module Devup
         # END
 
       DOTENV
+    end
+
+    def compose
+      @compose ||= begin
+                     Compose.new(
+                       root.join("docker-compose.devup.yml"),
+                       project: project, logger: logger, shell: shell
+                     )
+                   end
     end
   end
 end

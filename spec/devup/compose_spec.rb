@@ -1,11 +1,12 @@
 require "devup/compose"
-require "support/logger"
+require "devup/logger"
 
 module Devup
   RSpec.describe Compose do
-    let(:compose) { described_class.new docker_compose_path, logger: logger }
+    let(:compose) { described_class.new docker_compose_path, logger: logger, shell: shell }
     let(:docker_compose_path) { Root.join("spec/dummy/docker-compose.yml") }
-    let(:logger) { Support::LoggerFactory.call }
+    let(:logger) { Logger.build(:error) }
+    let(:shell) { double(:shell) }
 
     let(:config) do
       <<~COMPOSE
@@ -43,8 +44,9 @@ module Devup
       let(:port) { 80 }
 
       before do
-        allow(compose).to receive(:exec)
-          .with("port nginx 80").and_return("0.0.0.0:33188")
+        allow(shell).to receive(:exec)
+          .with(/port nginx 80/)
+          .and_return(double(data: "0.0.0.0:33188", success?: true))
       end
 
       it { is_expected.to eq 33188 }

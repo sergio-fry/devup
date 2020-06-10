@@ -29,35 +29,5 @@ module Devup
       it { is_expected.not_to include "NGINX_HOST" }
       it { is_expected.to include "# no exposed ports" }
     end
-
-    describe "magic URLs" do
-      context "when postgres" do
-        let(:name) { "postgres" }
-        let(:ports) { [double(:port, from: 5432, to: 32772)] }
-
-        it { is_expected.to include "export DATABASE_URL=postgres://postgres@0.0.0.0:32772/db" }
-      end
-
-      context "when redis" do
-        let(:name) { "redis" }
-        let(:ports) { [double(:port, from: 6379, to: 32772)] }
-
-        it { is_expected.to include "export REDIS_URL=redis://0.0.0.0:32772" }
-      end
-
-      context "when memcached" do
-        let(:name) { "memcached" }
-        let(:ports) { [double(:port, from: 11211, to: 32772)] }
-
-        it { is_expected.to include "export MEMCACHE_SERVERS=0.0.0.0:32772" }
-      end
-
-      context "when mysql" do
-        let(:name) { "mysql" }
-        let(:ports) { [double(:port, from: 3306, to: 32772)] }
-
-        it { is_expected.to include "export DATABASE_URL=mysql2://root@0.0.0.0:32772/db" }
-      end
-    end
   end
 end

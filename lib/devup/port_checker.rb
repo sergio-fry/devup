@@ -1,8 +1,6 @@
 require "socket"
 require "timeout"
 
-require "devup/logger"
-
 module Devup
   class PortChecker
     def call(port)

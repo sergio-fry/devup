@@ -1,22 +1,22 @@
 require "yaml"
-require "open3"
+
+require "devup/compose/ps"
 
 module Devup
   class Compose
-    attr_reader :path, :project, :logger
+    attr_reader :path, :project, :logger, :shell
 
     class Error < StandardError; end
 
-    def initialize(path, project: "devup", logger:)
+    def initialize(path, project: "devup", logger:, shell:)
       @path = path
       @project = project
       @logger = logger
+      @shell = shell
     end
 
     def check
-      _output, status = safe_exec("docker-compose -v")
-
-      raise Error, "Command docker-compose is not installed" unless status
+      true
     end
 
     def services
@@ -33,6 +33,8 @@ module Devup
 
     def up
       exec "up -d --remove-orphans"
+
+      wait_alive 3
     end
 
     def stop
@@ -45,22 +47,30 @@ module Devup
 
     private
 
-    def exec(cmd)
-      output, status = safe_exec "docker-compose -p #{project} -f #{path} #{cmd}"
+    def wait_alive(timeout, retry_sleep: 0.3)
+      start = Time.now
 
-      raise(Error) unless status
+      loop {
+        break if alive?
 
-      output
+        if Time.now - start > timeout
+          logger.error "can't run services"
+          break
+        end
+        sleep retry_sleep
+      }
     end
 
-    def safe_exec(cmd)
-      logger.debug "shell #{cmd}"
+    def alive?
+      ComposeHelpers::Ps.new(exec("ps")).up?
+    end
 
-      output, error, status = Open3.capture3(cmd + ";")
+    def exec(cmd)
+      resp = shell.exec "docker-compose -p #{project} -f #{path} #{cmd}"
 
-      logger.error(error) unless status.success?
+      raise(Error) unless resp.success?
 
-      [output, status.success?]
+      resp.data
     end
 
     def config

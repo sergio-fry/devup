@@ -32,7 +32,7 @@ gem "devup", group: [:development, :test]
 
 and
 
-    bundle install
+    $ bundle install
 
 
 Update your database.yml to use ENV:
@@ -49,11 +49,11 @@ development:
 
 You are ready to use rails with PostgreSQL configured
 
-    $ bundle exec rake db:create db:migrate
-    Creating blog_postgres_1 ... done
-    Created database 'blog_development'
+    $ RAILS_ENV=test bundle exec rake db:create
+    DevUp! INFO starting up...
+    DevUp! INFO up
 
-    $ bundle exec rails server
+    $ Created database 'dummy_rails_test'
 
 
 ## Without Rails
@@ -71,12 +71,15 @@ DB = Sequel.connect(ENV.fetch("DATABASE_URL"))
 
 ## Without Ruby (PHP, nodejs, Java, ...)
 
+Install DevUp!
+
+    $ gem install devup
+
 Start up services
 
     $ devup
-    dummy_rails_postgres_1 is up-to-date
-    dummy_rails_redis_1 is up-to-date
-    dummy_rails_memcached_1 is up-to-date
+    DevUp! INFO starting up...
+    DevUp! INFO up
 
     $ cat .env.services
     export POSTGRES_HOST=0.0.0.0
@@ -100,6 +103,10 @@ Now you can run app
 
 If you don't want devup to setup your dev services, you can disable it by using `DEVUP_ENABLED=false`. Just add it to .env.local file.
 
+### Debug
+
+    $ export DEVUP_LOG_LEVEL=debug
+    $ devup
 
 ## Development
 

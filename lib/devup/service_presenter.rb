@@ -11,7 +11,6 @@ module Devup
       res = []
 
       res << "# #{service.name}"
-      res << magic if magic?
 
       if has_ports?
         res << host_env
@@ -53,36 +52,12 @@ module Devup
       service.ports.size > 0
     end
 
-    def magic?
-      %w[postgres redis mysql memcached].include? service.name
-    end
-
-    def magic
-      case service.name
-      when "postgres"
-        "export DATABASE_URL=postgres://postgres@0.0.0.0:#{port_to(5432)}/#{database_name}"
-      when "mysql"
-        "export DATABASE_URL=mysql2://root@0.0.0.0:#{port_to(3306)}/#{database_name}"
-      when "redis"
-        "export REDIS_URL=redis://0.0.0.0:#{port_to(6379)}"
-      when "memcached"
-        "export MEMCACHE_SERVERS=0.0.0.0:#{port_to(11211)}"
-      end
-    end
-
     def port_to(from)
       service.ports.find { |p| p.from == from }&.to
     end
 
     def database_name
-      if defined? Rails
-        [
-          project,
-          Rails.env
-        ].join("_")
-      else
-        "db"
-      end
+      "db"
     end
   end
 end

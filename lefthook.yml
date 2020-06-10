@@ -1,0 +1,7 @@
+pre-commit:
+  parallel: true
+  commands:
+    lint:
+      files: git diff --name-only --staged
+      glob: "*.rb"
+      run: standardrb --force-exclusion {files}

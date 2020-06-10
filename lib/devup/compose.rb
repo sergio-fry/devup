@@ -1,5 +1,7 @@
 require "yaml"
 
+require "devup/compose/ps"
+
 module Devup
   class Compose
     attr_reader :path, :project, :logger, :shell
@@ -31,6 +33,8 @@ module Devup
 
     def up
       exec "up -d --remove-orphans"
+
+      wait_alive 3
     end
 
     def stop
@@ -42,6 +46,24 @@ module Devup
     end
 
     private
+
+    def wait_alive(timeout, retry_sleep: 0.3)
+      start = Time.now
+
+      loop {
+        break if alive?
+
+        if Time.now - start > timeout
+          logger.error "can't run services"
+          break
+        end
+        sleep retry_sleep
+      }
+    end
+
+    def alive?
+      ComposeHelpers::Ps.new(exec("ps")).up?
+    end
 
     def exec(cmd)
       resp = shell.exec "docker-compose -p #{project} -f #{path} #{cmd}"

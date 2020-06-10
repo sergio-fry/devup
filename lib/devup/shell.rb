@@ -16,7 +16,7 @@ module Devup
     }
 
     def exec(cmd)
-      logger.debug "shell #{cmd}"
+      logger.debug "$ #{cmd}"
 
       output, error, status = Open3.capture3(cmd + ";")
 

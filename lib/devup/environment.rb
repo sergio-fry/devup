@@ -8,13 +8,12 @@ require "devup/shell"
 
 module Devup
   class Environment
-    attr_reader :pwd, :logger, :port_checker, :shell
+    attr_reader :pwd, :logger, :shell
 
-    def initialize(pwd:, compose: nil, logger: Logger.build, port_checker: PortChecker.new, shell: Shell.new(pwd: pwd, logger: logger))
+    def initialize(pwd:, compose: nil, logger: Logger.build, shell: Shell.new(pwd: pwd, logger: logger))
       @pwd = pwd.to_s.strip
       @compose = compose
       @logger = logger
-      @port_checker = port_checker
       @shell = shell
     end
 
@@ -32,9 +31,10 @@ module Devup
       compose.up
       write_dotenv
       logger.info "up"
-    rescue
+    rescue => ex
       clear_dotenv
-      logger.info "halted"
+      logger.debug ex
+      logger.error "halted"
     end
 
     def down
@@ -43,7 +43,8 @@ module Devup
       compose.rm
       clear_dotenv
       logger.info "down"
-    rescue
+    rescue => ex
+      logger.debug ex
       logger.info "halted"
     end
 

@@ -1,16 +1,16 @@
 require "yaml"
-require "open3"
 
 module Devup
   class Compose
-    attr_reader :path, :project, :logger
+    attr_reader :path, :project, :logger, :shell
 
     class Error < StandardError; end
 
-    def initialize(path, project: "devup", logger:)
+    def initialize(path, project: "devup", logger:, shell:)
       @path = path
       @project = project
       @logger = logger
+      @shell = shell
     end
 
     def check
@@ -44,21 +44,11 @@ module Devup
     private
 
     def exec(cmd)
-      output, status = safe_exec "docker-compose -p #{project} -f #{path} #{cmd}"
+      resp = shell.exec "docker-compose -p #{project} -f #{path} #{cmd}"
 
-      raise(Error) unless status
+      raise(Error) unless resp.success?
 
-      output
-    end
-
-    def safe_exec(cmd)
-      logger.debug "shell #{cmd}"
-
-      output, error, status = Open3.capture3(cmd + ";")
-
-      logger.error(error) unless status.success?
-
-      [output, status.success?]
+      resp.data
     end
 
     def config

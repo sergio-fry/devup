@@ -5,16 +5,18 @@ require "devup/compose"
 require "devup/service"
 require "devup/service_presenter"
 require "devup/port_checker"
+require "devup/shell"
 
 module Devup
   class Environment
-    attr_reader :pwd, :compose, :logger, :port_checker
+    attr_reader :pwd, :logger, :port_checker, :shell
 
-    def initialize(pwd:, compose: nil, logger: Logger.build, port_checker: PortChecker.new)
+    def initialize(pwd:, compose: nil, logger: Logger.build, port_checker: PortChecker.new, shell: Shell.new(pwd: pwd, logger: logger))
       @pwd = pwd.to_s.strip
-      @compose = compose || Compose.new(root.join("docker-compose.devup.yml"), project: project, logger: logger)
+      @compose = compose
       @logger = logger
       @port_checker = port_checker
+      @shell = shell
     end
 
     def project
@@ -128,6 +130,15 @@ module Devup
         # END
 
       DOTENV
+    end
+
+    def compose
+      @compose ||= begin
+                     Compose.new(
+                       root.join("docker-compose.devup.yml"),
+                       project: project, logger: logger, shell: shell
+                     )
+                   end
     end
   end
 end

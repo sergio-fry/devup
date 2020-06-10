@@ -1,5 +1,8 @@
 if ENV.fetch("DEVUP_ENABLED", "true") == "true"
-  devup = Devup::Environment.new pwd: `pwd`
+  devup = Devup::Environment.new(
+    pwd: `pwd`,
+    logger: Devup::Logger.build(ENV.fetch("DEVUP_LOG_LEVEL", "info"))
+  )
   devup.up
 
   begin

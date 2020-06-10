@@ -54,6 +54,8 @@ module Devup
     end
 
     def safe_exec(cmd)
+      logger.debug "shell #{cmd}"
+
       output, error, status = Open3.capture3(cmd + ";")
 
       logger.error(error) unless status.success?

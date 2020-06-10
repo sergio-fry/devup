@@ -55,7 +55,6 @@ module Devup
       # TODO
     end
 
-
     def check
       raise if missing_config
       compose.check

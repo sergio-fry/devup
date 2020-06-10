@@ -4,15 +4,17 @@ require "devup/logger"
 require "devup/compose"
 require "devup/service"
 require "devup/service_presenter"
+require "devup/port_checker"
 
 module Devup
   class Environment
-    attr_reader :pwd, :compose, :logger
+    attr_reader :pwd, :compose, :logger, :port_checker
 
-    def initialize(pwd:, compose: nil, logger: Logger.default)
+    def initialize(pwd:, compose: nil, logger: Logger.default, port_checker: PortChecker.new)
       @pwd = pwd.to_s.strip
       @compose = compose || Compose.new(root.join("docker-compose.devup.yml"), project: project, logger: logger)
       @logger = logger
+      @port_checker = port_checker
     end
 
     def project
@@ -52,7 +54,34 @@ module Devup
     private
 
     def wait_services
-      # TODO
+      services.each { |service| wait_service(service) }
+    end
+
+    def wait_service(service)
+      service.ports.each { |port| wait_port(service, port) }
+    end
+
+    PORT_TIMEOUT = 5
+    PORT_WAIT_TIME = 1
+
+    def wait_port(service, port)
+      Timeout.timeout(PORT_TIMEOUT) do
+        loop do
+          logger.debug "wait #{service.name} port #{port.from}"
+
+          if port_checker.call(port.to)
+            logger.debug "connected to #{port.from}"
+            break
+          else
+            logger.debug "failed to connect #{port.from}"
+          end
+
+          sleep PORT_WAIT_TIME
+        end
+      end
+    rescue Timeout::Error
+      logger.error "failed to connect #{port.from}"
+      raise
     end
 
     def check

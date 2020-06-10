@@ -1,10 +1,11 @@
 require "devup/compose"
+require "support/logger"
 
 module Devup
   RSpec.describe Compose do
     let(:compose) { described_class.new docker_compose_path, logger: logger }
     let(:docker_compose_path) { Root.join("spec/dummy/docker-compose.yml") }
-    let(:logger) { double(:logger) }
+    let(:logger) { Support::LoggerFactory.call }
 
     let(:config) do
       <<~COMPOSE

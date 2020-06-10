@@ -5,9 +5,10 @@ services:
     image: nginx
     ports:
       - "80"
+      - "433"
 
   pg:
-    image: postgres:11
+    image: postgres:9.2
     ports:
       - "5432"
       - "5433"

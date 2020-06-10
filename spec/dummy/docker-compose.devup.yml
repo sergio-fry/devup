@@ -11,4 +11,3 @@ services:
     image: postgres:9.2
     ports:
       - "5432"
-      - "5433"

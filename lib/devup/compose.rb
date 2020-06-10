@@ -24,7 +24,11 @@ module Devup
     end
 
     def service_ports(name)
-      config["services"][name]["ports"]
+      config["services"][name]["ports"].map { |el| el.to_s.split(":")[-1].to_i }
+    end
+
+    def port_mapping(service, port)
+      exec("port #{service} #{port}").split(":")[-1].strip.to_i
     end
 
     def up
@@ -39,6 +43,8 @@ module Devup
       exec "rm -f"
     end
 
+    private
+
     def exec(cmd)
       output, status = safe_exec "docker-compose -p #{project} -f #{path} #{cmd}"
 
@@ -46,8 +52,6 @@ module Devup
 
       output
     end
-
-    private
 
     def safe_exec(cmd)
       output, error, status = Open3.capture3(cmd + ";")

@@ -32,8 +32,21 @@ module Devup
     end
 
     describe "#service_ports" do
-      it { expect(compose.service_ports("nginx")).to eq ["80", "81:8181"] }
-      it { expect(compose.service_ports("postgres")).to eq ["5432"] }
+      it { expect(compose.service_ports("nginx")).to eq [80, 8181] }
+      it { expect(compose.service_ports("postgres")).to eq [5432] }
+    end
+
+    describe "#port_mapping" do
+      subject { compose.port_mapping(serivce, port) }
+      let(:serivce) { "nginx" }
+      let(:port) { 80 }
+
+      before do
+        allow(compose).to receive(:exec)
+          .with("port nginx 80").and_return("0.0.0.0:33188")
+      end
+
+      it { is_expected.to eq 33188 }
     end
   end
 end

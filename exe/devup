@@ -1,16 +1,5 @@
 #!/usr/bin/env ruby
 
-require "devup/environment"
+require "devup/cli"
 
-devup = Devup::Environment.new(
-  pwd: `pwd`,
-  logger: Devup::Logger.build(ENV.fetch("DEVUP_LOG_LEVEL", "info"))
-)
-
-# TODO: use dry-cli here
-case ARGV[0]
-when "down"
-  devup.down
-else
-  devup.up
-end
+Dry::CLI.new(Devup::CLI::Commands).call

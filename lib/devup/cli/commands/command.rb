@@ -23,6 +23,15 @@ module Devup
             :info
           end
         end
+
+        def devup
+          require "devup/environment"
+
+          @devup ||= Devup::Environment.new(
+            pwd: `pwd`,
+            logger: logger
+          )
+        end
       end
     end
   end

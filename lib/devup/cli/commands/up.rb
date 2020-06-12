@@ -9,12 +9,6 @@ module Devup
 
         def call(**options)
           super
-          require "devup/environment"
-
-          devup = Devup::Environment.new(
-            pwd: `pwd`,
-            logger: logger
-          )
 
           devup.up
         end

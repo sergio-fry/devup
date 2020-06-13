@@ -77,7 +77,7 @@ Install DevUp!
 
 Start up services
 
-    $ devup
+    $ devup up
     DevUp! INFO starting up...
     DevUp! INFO up
 
@@ -106,7 +106,7 @@ If you don't want devup to setup your dev services, you can disable it by using 
 ### Debug
 
     $ export DEVUP_LOG_LEVEL=debug
-    $ devup
+    $ devup up
 
 ## Development
 

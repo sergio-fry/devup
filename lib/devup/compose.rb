@@ -24,6 +24,8 @@ module Devup
     end
 
     def service_ports(name)
+      return [] if config["services"][name]["ports"].nil?
+
       config["services"][name]["ports"].map { |el| el.to_s.split(":")[-1].to_i }
     end
 

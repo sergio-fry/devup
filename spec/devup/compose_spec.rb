@@ -36,6 +36,19 @@ module Devup
     describe "#service_ports" do
       it { expect(compose.service_ports("nginx")).to eq [80, 8181] }
       it { expect(compose.service_ports("postgres")).to eq [5432] }
+
+      context "when service has no port" do
+        let(:config) do
+          <<~COMPOSE
+            version: '3'
+
+            services:
+              nginx:
+                image: nginx
+          COMPOSE
+        end
+        it { expect(compose.service_ports("nginx")).to eq [] }
+      end
     end
 
     describe "#port_mapping" do

@@ -6,3 +6,6 @@ services:
     ports:
       - "5432"
 
+  web:
+    image: nginx
+

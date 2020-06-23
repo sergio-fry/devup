@@ -11,6 +11,21 @@ module Devup
           super
 
           devup.up
+          print_info
+        end
+
+        private
+
+        def print_info
+          puts <<~INFO
+
+            Now you are ready to use services. All variables are available
+            in a .env.services file. Just start you ruby application if
+            gem "devup" is used. Or load variable manually with
+
+                $ source .env.services
+
+          INFO
         end
       end
     end

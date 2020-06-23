@@ -35,6 +35,7 @@ module Devup
       clear_dotenv
       logger.debug ex
       logger.error "halted"
+      raise ex
     end
 
     def down

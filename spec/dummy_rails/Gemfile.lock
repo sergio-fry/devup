@@ -1,8 +1,9 @@
 PATH
   remote: ../..
   specs:
-    devup (0.3.2)
+    devup (0.3.3)
       dotenv
+      dry-cli
 
 GEM
   remote: https://rubygems.org/
@@ -82,6 +83,8 @@ GEM
     crass (1.0.6)
     dalli (2.7.10)
     dotenv (2.7.5)
+    dry-cli (0.6.0)
+      concurrent-ruby (~> 1.0)
     erubi (1.9.0)
     ffi (1.13.0)
     globalid (0.4.2)

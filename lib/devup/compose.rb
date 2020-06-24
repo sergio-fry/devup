@@ -30,7 +30,7 @@ module Devup
     end
 
     def port_mapping(port)
-      ComposeHelpers::Ps.new(exec_ps).port_mapping(port)
+      ComposeHelpers::Ps.new(exec_ps_cached).port_mapping(port)
     end
 
     def up
@@ -69,6 +69,10 @@ module Devup
 
     def exec_ps
       @exec_ps_output = exec("ps")
+    end
+
+    def exec_ps_cached
+      @exec_ps_output ||= exec("ps")
     end
 
     def exec(cmd)

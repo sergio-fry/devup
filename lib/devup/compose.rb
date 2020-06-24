@@ -29,7 +29,7 @@ module Devup
       config["services"][name]["ports"].map { |el| el.to_s.split(":")[-1].to_i }
     end
 
-    def port_mapping(_service, port)
+    def port_mapping(port)
       ComposeHelpers::Ps.new(exec_ps).port_mapping(port)
     end
 

@@ -6,7 +6,7 @@ module Devup
 
     let(:compose) { double :compose }
     before { allow(compose).to receive(:service_ports).with("postgres").and_return([5432]) }
-    before { allow(compose).to receive(:port_mapping).with("postgres", 5432).and_return(32772) }
+    before { allow(compose).to receive(:port_mapping).with(5432).and_return(32772) }
 
     describe "#ports" do
       subject(:ports) { service.ports }

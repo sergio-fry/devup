@@ -52,8 +52,7 @@ module Devup
     end
 
     describe "#port_mapping" do
-      subject { compose.port_mapping(serivce, port) }
-      let(:serivce) { "nginx" }
+      subject { compose.port_mapping(port) }
       let(:port) { 80 }
 
       before do

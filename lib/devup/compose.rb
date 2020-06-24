@@ -29,8 +29,8 @@ module Devup
       config["services"][name]["ports"].map { |el| el.to_s.split(":")[-1].to_i }
     end
 
-    def port_mapping(service, port)
-      exec("port #{service} #{port}").split(":")[-1].strip.to_i
+    def port_mapping(_service, port)
+      ComposeHelpers::Ps.new(exec_ps).port_mapping(port)
     end
 
     def up
@@ -64,7 +64,11 @@ module Devup
     end
 
     def alive?
-      ComposeHelpers::Ps.new(exec("ps")).up?
+      ComposeHelpers::Ps.new(exec_ps).up?
+    end
+
+    def exec_ps
+      @exec_ps_output = exec("ps")
     end
 
     def exec(cmd)

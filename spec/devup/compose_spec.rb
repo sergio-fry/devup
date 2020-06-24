@@ -58,8 +58,15 @@ module Devup
 
       before do
         allow(shell).to receive(:exec)
-          .with(/port nginx 80/)
-          .and_return(double(data: "0.0.0.0:33188", success?: true))
+          .with(/ps/)
+          .and_return(double(data: output, success?: true))
+      end
+      let(:output) do
+        <<~OUTPUT
+                      Name                           Command              State            Ports
+          -----------------------------------------------------------------------------------------------
+          devup_nginx_1   docker-entrypoint.sh postgres   Up      0.0.0.0:33188->80/tcp
+        OUTPUT
       end
 
       it { is_expected.to eq 33188 }

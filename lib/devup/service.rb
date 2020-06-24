@@ -19,7 +19,7 @@ module Devup
       compose.service_ports(name).map do |from|
         OpenStruct.new(
           from: from,
-          to: compose.port_mapping(name, from)
+          to: compose.port_mapping(from)
         )
       end
     end

@@ -31,7 +31,7 @@ module Devup
     def ports_env
       res = []
 
-      res << port_env(to: service.ports.first.to)
+      res << port_env(to: service.ports.first.to) if service.ports.size == 1
 
       service.ports.each do |port|
         res << port_env(from: port.from, to: port.to)

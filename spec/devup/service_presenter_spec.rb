@@ -20,6 +20,7 @@ module Devup
       let(:ports) { [double(:port, from: 80, to: 12345), double(:port, from: 433, to: 23456)] }
 
       it { is_expected.to include "export NGINX_HOST=0.0.0.0" }
+      it { is_expected.to include "export NGINX_PORT=12345" }
       it { is_expected.to include "export NGINX_PORT_80=12345" }
       it { is_expected.to include "export NGINX_PORT_433=23456" }
     end

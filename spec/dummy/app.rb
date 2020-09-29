@@ -1,4 +1,6 @@
 require "bundler/setup"
 require "devup"
 
-puts ENV["PG_PORT"]
+Dotenv.load(".env.custom")
+
+puts ENV[ARGV[0]]

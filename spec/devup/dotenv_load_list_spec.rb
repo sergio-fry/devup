@@ -32,7 +32,7 @@ module Devup
 
     context "when env is test" do
       let(:app_env) { :test }
-      # it { is_expected.not_to include ".env.local" }
+      it { is_expected.not_to include ".env.local" }
     end
   end
 end

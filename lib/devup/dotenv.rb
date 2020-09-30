@@ -1,8 +1,17 @@
 require "dotenv"
+require "devup/dotenv_load_list"
 
-Dotenv.load(
-  ".env.development.local", ".env.test.local", ".env.production.local", ".env.local",
-  ".env.services",
-  ".env.development", ".env.test", ".env.production",
-  ".env"
-)
+begin
+  Dotenv.instrumenter = ActiveSupport::Notifications
+  ActiveSupport::Notifications.subscribe(/^dotenv/) do |*args|
+    event = ActiveSupport::Notifications::Event.new(*args)
+    # puts [event.payload[:env].filename, Rails.application].inspect
+    Spring.watch event.payload[:env].filename # if Rails.application
+  end
+rescue LoadError, ArgumentError
+  # Spring is not available
+end
+
+env = (ENV["RAILS_ENV"] || "development").to_sym
+list = Devup::DotenvLoadList.new(env: env)
+Dotenv.load(*list.to_a)

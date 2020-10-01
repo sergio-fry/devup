@@ -7,7 +7,7 @@ begin
     event = ActiveSupport::Notifications::Event.new(*args)
     Spring.watch event.payload[:env].filename # if Rails.application
   end
-rescue LoadError, ArgumentError
+rescue LoadError, ArgumentError, NameError
   # Spring is not available
 end
 

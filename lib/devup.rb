@@ -5,5 +5,7 @@ module Devup
   class Error < StandardError; end
 end
 
-require "devup/boot"
-require "devup/dotenv"
+if ENV.fetch("DEVUP_ENABLED", "true") == "true"
+  require "devup/boot"
+  require "devup/dotenv"
+end

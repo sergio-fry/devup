@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.authors = ["Sergei O. Udalov"]
   spec.email = ["sergei@udalovs.ru"]
 
-  spec.summary = "A tool to manage docker-compose for developmnet"
+  spec.summary = "A tool to manage docker-compose for development"
   # spec.description   = %q{TODO: Write a longer description or delete this line.}
   spec.homepage = "https://github.com/sergio-fry/devup"
   spec.license = "MIT"

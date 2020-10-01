@@ -6,8 +6,6 @@ RSpec.describe Devup do
     expect(Devup::VERSION).not_to be nil
   end
 
-  let(:docker_compose_path) { Root.join("spec/dummy/docker-compose.yml") }
-
   let(:devup) { Devup::Environment.new pwd: Root.join("spec/dummy"), logger: logger }
   let(:logger) { Devup::Logger.build(:error) }
 

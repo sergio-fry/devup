@@ -8,4 +8,3 @@ gem "rspec", "~> 3.0"
 gem "standard"
 gem "simplecov", require: false
 gem "byebug"
-gem "lefthook"

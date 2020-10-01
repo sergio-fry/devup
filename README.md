@@ -38,12 +38,21 @@ and
 Update your database.yml to use ENV:
 
 ```yaml
-test:
-  url: <%= ENV.fetch("DATABASE_URL") %>
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: <%= ENV.fetch("POSTGRES_HOST") %>
+  port: <%= ENV.fetch("POSTGRES_PORT") %>
+  username: postgres
+  password:
 
 development:
-  url: <%= ENV.fetch("DATABASE_URL") %>
+  <<: *default
+  database: development
 
+test:
+  <<: *default
+  database: test
 ```
 
 
@@ -65,7 +74,7 @@ ENV vars from .env.services are loaded with dotenv automatically.
 require "devup"
 require "sequel"
 
-DB = Sequel.connect(ENV.fetch("DATABASE_URL"))
+DB = Sequel.connect(adapter: "postgres", host: ENV.fetch("POSTGRES_HOST"), port: ENV.fetch("POSTGRES_PORT"), database: "blog", user: 'postgres')
 ```
 
 
@@ -102,6 +111,26 @@ Now you can run app
 ### Disable **DevUp!**
 
 If you don't want devup to setup your dev services, you can disable it by using `DEVUP_ENABLED=false`. Just add it to .env.local file.
+
+### Override some service
+
+If you want to switch some service from DevUp! to another, you can override ENV in a local dotenv configs:
+
+   * .env.local
+   * .env.development.local
+   * .env.test.local
+
+Just put to your .env.local:
+
+    export POSTGRES_HOST=0.0.0.0
+    export POSTGRES_PORT=5432
+
+### Get some DATABASE_URL working
+
+
+Just put to your .env.test or .env.development something like:
+
+    DATABASE_URL=postgres://postgres@$POSTGRES_HOST:$POSTGRES_PORT/test_db
 
 ### Debug
 

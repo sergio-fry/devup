@@ -9,7 +9,7 @@ if ENV.fetch("DEVUP_ENABLED", "true") == "true"
     require "spring/commands"
 
     Spring.watch devup.root.join("docker-compose.yml")
-  rescue LoadError, ArgumentError
+  rescue LoadError, ArgumentError => ex
     # Spring is not available
   end
 end

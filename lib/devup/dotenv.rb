@@ -5,7 +5,6 @@ begin
   Dotenv.instrumenter = ActiveSupport::Notifications
   ActiveSupport::Notifications.subscribe(/^dotenv/) do |*args|
     event = ActiveSupport::Notifications::Event.new(*args)
-    # puts [event.payload[:env].filename, Rails.application].inspect
     Spring.watch event.payload[:env].filename # if Rails.application
   end
 rescue LoadError, ArgumentError

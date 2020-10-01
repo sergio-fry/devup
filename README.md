@@ -62,7 +62,7 @@ You are ready to use rails with PostgreSQL configured
     DevUp! INFO starting up...
     DevUp! INFO up
 
-    $ Created database 'dummy_rails_test'
+    $ Created database 'test'
 
 
 ## Without Rails

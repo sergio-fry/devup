@@ -1,5 +1,6 @@
 require "dry/cli"
 
+require "devup/version"
 require "devup/cli/commands/up"
 require "devup/cli/commands/down"
 

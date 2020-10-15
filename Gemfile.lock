@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    devup (0.5.1)
+    devup (0.5.2)
       dotenv
       dry-cli
 

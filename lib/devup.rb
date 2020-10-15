@@ -8,4 +8,3 @@ end
 
 app = Devup::Application.new
 app.run
-

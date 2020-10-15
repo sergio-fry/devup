@@ -42,17 +42,27 @@ module Devup
         # Spring is not available
       end
 
-      env = (ENV["RAILS_ENV"] || ENV["RACK_ENV"] || "development").to_sym
-      list = Devup::DotenvLoadList.new(env: env)
-      Dotenv.load(*list.to_a)
+      Dotenv.load(*dotenv_list.to_a)
+    end
+
+    def app_env
+      (ENV["RAILS_ENV"] || ENV["RACK_ENV"] || "development").to_sym
+    end
+
+    def dotenv_list
+      Devup::DotenvLoadList.new(env: app_env)
+    end
+
+    def dotenv_vars
+      Dotenv.parse(*dotenv_list.to_a)
     end
 
     def log_level
-      ENV.fetch("DEVUP_LOG_LEVEL", "info")
+      ENV.fetch("DEVUP_LOG_LEVEL", dotenv_vars["DEVUP_LOG_LEVEL"] || "info")
     end
 
     def devup_disabled?
-      ENV.fetch("DEVUP_ENABLED", "true") != "true"
+      ENV.fetch("DEVUP_ENABLED", dotenv_vars["DEVUP_ENABLED"] || "true") != "true"
     end
   end
 end

@@ -1,11 +1,11 @@
 require "devup/version"
 require "devup/environment"
+require "devup/application"
 
 module Devup
   class Error < StandardError; end
 end
 
-if ENV.fetch("DEVUP_ENABLED", "true") == "true"
-  require "devup/boot"
-  require "devup/dotenv"
-end
+app = Devup::Application.new
+app.run
+

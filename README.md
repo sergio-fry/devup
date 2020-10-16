@@ -110,7 +110,7 @@ Now you can run app
 
 ### Disable **DevUp!**
 
-If you don't want devup to setup your dev services, you can disable it by using `DEVUP_ENABLED=false`. Just add it to .env.local file.
+If you don't want devup to setup your dev services, you can disable it by using `DEVUP_ENABLED=false`. Just add it to .env.test.local file.
 
 ### Override some service
 

@@ -8,7 +8,11 @@ module Devup
       list = []
 
       list << ".env.#{@env}.local" if env_defined?
+
+      # .env.local is ignored by dotenv-rails too. So behaviour is the same.
+      # https://github.com/bkeepers/dotenv/blob/08f22148fb14019dce1e9b1d8ac1a74788e49e1b/lib/dotenv/rails.rb#L69
       list << ".env.local" unless test?
+
       list << ".env.services"
       list << ".env.#{@env}" if env_defined?
       list << ".env"

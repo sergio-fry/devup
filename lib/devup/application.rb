@@ -6,9 +6,7 @@ require "dotenv"
 module Devup
   class Application
     def run
-      return if devup_disabled?
-
-      boot
+      boot unless devup_disabled?
       load_env
     end
 
@@ -32,14 +30,12 @@ module Devup
     end
 
     def load_env
-      begin
+      if defined? ActiveSupport::Notifications
         Dotenv.instrumenter = ActiveSupport::Notifications
         ActiveSupport::Notifications.subscribe(/^dotenv/) do |*args|
           event = ActiveSupport::Notifications::Event.new(*args)
-          Spring.watch event.payload[:env].filename # if Rails.application
+          Spring.watch event.payload[:env].filename if defined? Spring
         end
-      rescue LoadError, ArgumentError, NameError
-        # Spring is not available
       end
 
       Dotenv.load(*dotenv_list.to_a)

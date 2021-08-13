@@ -2,6 +2,7 @@ require "socket"
 require "timeout"
 
 module Devup
+  # TODO we should use this to check ports are ready
   class PortChecker
     def call(port)
       s = TCPSocket.new("0.0.0.0", port)

@@ -9,6 +9,7 @@ module Devup
       @logger = logger
     end
 
+    # TODO maybe it should become somthing like ExecutedShellCommand ?
     Result = Struct.new(:data, :status) {
       def success?
         status

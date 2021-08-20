@@ -3,7 +3,7 @@ require "yaml"
 require "devup/logger"
 require "devup/compose"
 require "devup/service"
-require "devup/service_presenter"
+require "devup/service_dotenv"
 require "devup/shell"
 
 module Devup
@@ -75,7 +75,7 @@ module Devup
     end
 
     def service_env(service)
-      ServicePresenter.new(service, project: project).call
+      ServiceDotenv.new(service, project: project).text
     end
 
     def write_dotenv

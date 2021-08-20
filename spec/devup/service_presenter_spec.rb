@@ -1,9 +1,8 @@
-require "devup/service_presenter"
+require "devup/service_dotenv"
 
 module Devup
-  RSpec.describe ServicePresenter do
-    subject { presenter.call }
-    let(:presenter) { described_class.new(service) }
+  RSpec.describe ServiceDotenv do
+    subject { described_class.new(service).text }
     let(:service) { double(:service, name: name, ports: ports) }
     let(:name) { "nginx" }
     let(:ports) { [double(:port, from: 80, to: 32772)] }

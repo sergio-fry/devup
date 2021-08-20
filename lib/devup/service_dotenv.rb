@@ -1,6 +1,5 @@
 module Devup
-  # TODO: This -er name is sux. #call is agr..
-  class ServicePresenter
+  class ServiceDotenv
     attr_reader :service, :project
 
     def initialize(service, project: nil)
@@ -8,7 +7,7 @@ module Devup
       @project = project
     end
 
-    def call
+    def text
       res = []
 
       res << "# #{service.name}"

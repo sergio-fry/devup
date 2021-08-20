@@ -1,7 +1,7 @@
 require "devup/port_checker"
 
 module Devup
-  RSpec.describe PortChecker do
+  RSpec.describe PortChecker, integration: true do
     before { `docker run --name devup_test -p #{port_mapping} -d nginx` }
     before { sleep 1 }
     let(:checker) { described_class.new }

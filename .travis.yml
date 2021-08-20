@@ -23,10 +23,14 @@ jobs:
         - chmod +x ./cc-test-reporter
         - "./cc-test-reporter before-build"
       script:
-        - bundle exec rake spec
+        - bundle exec rspec
       after_script:
         - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
     - stage: test
       name: Lint
       script:
         - bundle exec standardrb
+    - stage: test
+      name: Integration
+      script:
+        - bundle exec rspec --tag @integration

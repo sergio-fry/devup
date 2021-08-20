@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.email = ["sergei@udalovs.ru"]
 
   spec.summary = "A tool to manage docker-compose for development"
-  spec.description   = %q{Describe development services with YAML}
+  spec.description = "Describe development services with YAML"
   spec.homepage = "https://github.com/sergio-fry/devup"
   spec.license = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")

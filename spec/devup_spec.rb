@@ -1,7 +1,7 @@
 require "devup/environment"
 require "devup/logger"
 
-RSpec.describe Devup do
+RSpec.describe Devup, integration: true do
   it "has a version number" do
     expect(Devup::VERSION).not_to be nil
   end

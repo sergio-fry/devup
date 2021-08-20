@@ -1,7 +1,7 @@
 module Devup
   class DotenvLoadList
     def initialize(env: nil)
-      @env = env.to_sym unless env.nil?
+      @env = env&.to_sym
     end
 
     def to_a

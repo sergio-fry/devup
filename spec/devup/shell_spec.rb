@@ -3,7 +3,8 @@ require "devup/logger"
 
 module Devup
   RSpec.describe Shell do
-    let(:shell) { described_class.new pwd: `pwd`, logger: Logger.build }
+    let(:shell) { described_class.new pwd: `pwd`, logger: logger }
+    let(:logger) { double(:logger, debug: nil, error: nil) }
 
     describe "#exec" do
       context "when success" do

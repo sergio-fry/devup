@@ -1,4 +1,4 @@
-require "ostruct"
+require_relative "port"
 
 module Devup
   class Service
@@ -17,8 +17,7 @@ module Devup
 
     def fetch_ports
       compose.service_ports(name).map do |from|
-        # TODO real class please
-        OpenStruct.new(
+        Port.new(
           from: from,
           to: compose.port_mapping(from)
         )

@@ -25,10 +25,7 @@ jobs:
       script:
         - bundle exec rspec
       after_script:
-        - pwd
-        - ls
-        - ls /home/travis/build/sergio-fry/devup/coverage
-        - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
+        - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT --coverage-input-type simplecov"
     - stage: test
       name: Lint
       script:

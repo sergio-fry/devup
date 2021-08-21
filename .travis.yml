@@ -25,6 +25,7 @@ jobs:
       script:
         - bundle exec rspec
       after_script:
+        - ls coverage
         - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
     - stage: test
       name: Lint

@@ -1,7 +1,9 @@
 require "bundler/setup"
 require "simplecov"
+
 SimpleCov.start do
   add_filter "/spec/"
+  command_name ENV.fetch("SIMPLECOV_COMMAND_NAME", "default")
 end
 
 require "byebug"

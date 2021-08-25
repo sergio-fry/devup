@@ -1,6 +1,6 @@
 require "yaml"
 
-require "devup/compose/ps"
+require "devup/compose/processes"
 
 module Devup
   class Compose
@@ -31,7 +31,7 @@ module Devup
     end
 
     def port_mapping(port)
-      ComposeHelpers::Ps.new(exec_ps_cached).port_mapping(port)
+      Compose::Processes.new(exec_ps_cached).port_mapping(port)
     end
 
     def up
@@ -65,7 +65,7 @@ module Devup
     end
 
     def alive?
-      ComposeHelpers::Ps.new(exec_ps).up?
+      Compose::Processes.new(exec_ps).up?
     end
 
     def exec_ps

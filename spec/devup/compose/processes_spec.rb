@@ -1,8 +1,8 @@
-require "devup/compose/ps"
+require "devup/compose/processes"
 
 module Devup
-  module ComposeHelpers
-    RSpec.describe Ps do
+  class Compose
+    RSpec.describe Processes do
       let(:ps) { described_class.new output }
 
       context do

@@ -26,6 +26,7 @@ module Devup
     def service_ports(name)
       return [] if config["services"][name]["ports"].nil?
 
+      # TODO: extratct this to ComplsePort
       config["services"][name]["ports"].map { |el| el.to_s.split(":")[-1].to_i }
     end
 

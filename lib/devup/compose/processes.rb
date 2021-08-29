@@ -1,6 +1,6 @@
 module Devup
-  module ComposeHelpers
-    class Ps
+  class Compose
+    class Processes
       attr_reader :output
       def initialize(output)
         @output = output

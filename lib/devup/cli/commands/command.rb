@@ -13,7 +13,7 @@ module Devup
         attr_reader :opts
 
         def logger
-          @logger ||= Devup::Logger.build(log_level)
+          @logger ||= Devup::Logger.new(level: log_level)
         end
 
         def log_level

@@ -2,12 +2,13 @@ require "devup/environment"
 
 module Devup
   RSpec.describe Environment do
-    let(:env) { described_class.new pwd: pwd, compose: compose }
+    let(:env) { described_class.new pwd: pwd, compose: compose, logger: logger }
+    let(:logger) { Logger.new }
     let(:pwd) { Root.join("spec/dummy") }
     let(:compose) { double(:compose) }
 
     describe "#project" do
-      let(:env) { described_class.new pwd: pwd }
+      let(:env) { described_class.new pwd: pwd, logger: logger }
       subject { env.project }
       let(:pwd) { "/apps/foo" }
       it { is_expected.to eq "foo" }

@@ -7,7 +7,7 @@ RSpec.describe Devup, integration: true do
   end
 
   let(:devup) { Devup::Environment.new pwd: Root.join("spec/dummy"), logger: logger }
-  let(:logger) { Devup::Logger.build(:error) }
+  let(:logger) { Devup::Logger.new(level: :error) }
 
   it "works" do
     devup.up

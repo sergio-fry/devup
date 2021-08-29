@@ -5,7 +5,7 @@ module Devup
   RSpec.describe Compose do
     let(:compose) { described_class.new docker_compose_path, logger: logger, shell: shell }
     let(:docker_compose_path) { Root.join("spec/dummy/docker-compose.yml") }
-    let(:logger) { Logger.build(:error) }
+    let(:logger) { Logger.new(level: :error) }
     let(:shell) { double(:shell) }
 
     let(:config) do

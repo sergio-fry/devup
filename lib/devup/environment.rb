@@ -10,7 +10,7 @@ module Devup
   class Environment
     attr_reader :pwd, :logger, :shell
 
-    def initialize(pwd:, compose: nil, logger: Logger.build, shell: Shell.new(pwd: pwd, logger: logger))
+    def initialize(pwd:, compose: nil, logger:, shell: Shell.new(pwd: pwd, logger: logger))
       @pwd = pwd.to_s.strip
       @compose = compose
       @logger = logger

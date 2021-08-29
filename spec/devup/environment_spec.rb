@@ -3,7 +3,7 @@ require "devup/environment"
 module Devup
   RSpec.describe Environment do
     let(:env) { described_class.new pwd: pwd, compose: compose, logger: logger }
-    let(:logger) { Logger.build }
+    let(:logger) { Logger.new }
     let(:pwd) { Root.join("spec/dummy") }
     let(:compose) { double(:compose) }
 

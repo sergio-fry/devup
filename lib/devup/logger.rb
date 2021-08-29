@@ -1,15 +1,36 @@
 require "logger"
 
 module Devup
-  class Logger < ::Logger
-    # Avoid factory. User new class instead
-    def self.build(level = :info)
-      formatter = ->(severity, _time, _progname, msg) { "DevUp! #{severity} #{msg}\n" }
-      logger = new(STDOUT, formatter: formatter)
+  class Logger
+    def initialize(device: STDOUT, level: :info)
+      @level = level
+      @device = device
+    end
 
-      logger.level = level
+    def debug(msg)
+      logger.debug msg
+    end
+
+    def info(msg)
+      logger.info msg
+    end
+
+    def error(msg)
+      logger.error msg
+    end
+
+    private
+
+    def logger
+      logger = ::Logger.new(@device, formatter: formatter)
+
+      logger.level = @level
 
       logger
+    end
+
+    def formatter
+      ->(severity, _time, _progname, msg) { "DevUp! #{severity} #{msg}\n" }
     end
   end
 end

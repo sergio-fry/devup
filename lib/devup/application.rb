@@ -25,7 +25,7 @@ module Devup
     def devup
       @devup ||= Devup::Environment.new(
         pwd: `pwd`,
-        logger: Devup::Logger.build(log_level)
+        logger: Devup::Logger.new(level: log_level)
       )
     end
 

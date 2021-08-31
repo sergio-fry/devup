@@ -28,7 +28,7 @@ module Devup
 
     before { allow(compose).to receive(:config_content).and_return(config) }
 
-    describe "#services" do
+    describe "#servport_mapping" do
       subject { compose.services }
       it { is_expected.to eq %w[nginx postgres] }
     end

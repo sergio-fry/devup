@@ -27,7 +27,6 @@ module Devup
     def service_ports(name)
       return [] if config["services"][name]["ports"].nil?
 
-      # TODO: extract this to a class
       config["services"][name]["ports"].map { |el| PortMapping.new(el.to_s).from }
     end
 

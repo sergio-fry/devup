@@ -17,6 +17,7 @@ module Devup
 
     def fetch_ports
       compose.service_ports(name).map do |from|
+        # TODO should be merged to PortMapping (?)
         Port.new(
           from: from,
           to: compose.port_mapping(from)

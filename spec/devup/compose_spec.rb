@@ -69,7 +69,7 @@ module Devup
         OUTPUT
       end
 
-      it { is_expected.to eq Port.new(80, 33188) }
+      it { is_expected.to eq PortMapping.new(80, 33188) }
     end
   end
 end

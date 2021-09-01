@@ -1,6 +1,6 @@
 require "devup/service"
 require "devup/compose/port_config"
-require "devup/port"
+require "devup/port_mapping"
 
 module Devup
   RSpec.describe Service do
@@ -19,15 +19,12 @@ module Devup
       def port_mapping(port)
         case port
         when 5432
-          Port.new(5432, 32772)
+          PortMapping.new(5432, 32772)
         end
       end
     end
 
     let(:compose) { FakeCompose.new }
-
-    # before { allow(compose).to receive(:service_ports).with("postgres").and_return([5432]) }
-    # before { allow(compose).to receive(:port_mapping).with(5432).and_return(Port.new(5432, 32772)) }
 
     describe "#ports" do
       subject(:ports) { service.ports }

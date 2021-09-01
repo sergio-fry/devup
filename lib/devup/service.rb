@@ -1,4 +1,4 @@
-require_relative "port"
+require_relative "port_mapping"
 
 module Devup
   class Service

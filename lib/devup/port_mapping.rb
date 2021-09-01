@@ -1,6 +1,5 @@
 module Devup
-  # TODO rename to PortMapping
-  class Port
+  class PortMapping
     def initialize(from, to)
       @from = from
       @to = to

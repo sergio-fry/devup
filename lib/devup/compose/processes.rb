@@ -1,3 +1,5 @@
+require "devup/port"
+
 module Devup
   class Compose
     class Processes
@@ -15,9 +17,9 @@ module Devup
       def port_mapping(port)
         m = output.match(/\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}:(\d+)->#{port}\/tcp/)
 
-        return if m.nil?
+        return Port.new(port, nil) if m.nil?
 
-        m[1].to_i
+        Port.new(port, m[1].to_i)
       end
 
       private

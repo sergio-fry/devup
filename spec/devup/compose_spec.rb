@@ -1,5 +1,6 @@
 require "devup/compose"
 require "devup/logger"
+require "devup/compose/port_config"
 
 module Devup
   RSpec.describe Compose do
@@ -34,8 +35,8 @@ module Devup
     end
 
     describe "#service_ports" do
-      it { expect(compose.service_ports("nginx")).to eq [80, 8181] }
-      it { expect(compose.service_ports("postgres")).to eq [5432] }
+      it { expect(compose.service_ports("nginx")).to eq [Compose::PortConfig.new("80"), Compose::PortConfig.new("81:8181")] }
+      it { expect(compose.service_ports("postgres")).to eq [Compose::PortConfig.new("5432")] }
 
       context "when service has no port" do
         let(:config) do
@@ -68,7 +69,7 @@ module Devup
         OUTPUT
       end
 
-      it { is_expected.to eq 33188 }
+      it { is_expected.to eq Port.new(80, 33188) }
     end
   end
 end

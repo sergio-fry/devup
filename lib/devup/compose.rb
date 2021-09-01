@@ -1,7 +1,7 @@
 require "yaml"
 
 require "devup/compose/processes"
-require "devup/compose/port_mapping"
+require "devup/compose/port_config"
 
 module Devup
   class Compose
@@ -27,7 +27,7 @@ module Devup
     def service_ports(name)
       return [] if config["services"][name]["ports"].nil?
 
-      config["services"][name]["ports"].map { |el| PortMapping.new(el.to_s).from }
+      config["services"][name]["ports"].map { |el| PortConfig.new(el.to_s) }
     end
 
     def port_mapping(port)

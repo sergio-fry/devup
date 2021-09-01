@@ -18,8 +18,8 @@ module Devup
       subject { env.env }
       let(:compose) { double(:compose, services: services, service_ports: ports) }
       let(:services) { ["nginx"] }
-      let(:ports) { [80] }
-      before { allow(compose).to receive(:port_mapping).with(80).and_return("12345") }
+      let(:ports) { [Compose::PortConfig.new("80")] }
+      before { allow(compose).to receive(:port_mapping).with(80).and_return(Port.new(80, 12345)) }
 
       it { is_expected.to include("export NGINX_HOST=0.0.0.0") }
       it { is_expected.to include("export NGINX_PORT=12345") }

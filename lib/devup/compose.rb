@@ -3,8 +3,8 @@ require "devup/compose/v2/compose"
 
 module Devup
   module Compose
-    def self.current_version
-      case `docker-compose -v`.match(/v(\d).\d+.\d+/)[1].to_i
+    def self.current_version(version = `docker-compose -v`)
+      case version.match(/(\d).\d+.\d+/)[1].to_i
       when 1
         V1::Compose
       when 2

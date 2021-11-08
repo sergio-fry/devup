@@ -1,4 +1,4 @@
-require_relative "port"
+require_relative "port_mapping"
 
 module Devup
   class Service
@@ -16,12 +16,8 @@ module Devup
     private
 
     def fetch_ports
-      compose.service_ports(name).map do |from|
-        # TODO should be merged to PortMapping (?)
-        Port.new(
-          from: from,
-          to: compose.port_mapping(from)
-        )
+      compose.service_ports(name).map do |el|
+        compose.port_mapping(el.from)
       end
     end
   end

@@ -13,6 +13,7 @@
 
 # Editor config
 .vimrc
+.nvimrc
 
 /.env.services
 /.env.local

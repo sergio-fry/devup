@@ -33,7 +33,7 @@ module Devup
         end
 
         def port_mapping(port)
-          Processes.new(exec_ps_cached).port_mapping(port)
+          processes.port_mapping(port)
         end
 
         def up
@@ -67,7 +67,11 @@ module Devup
         end
 
         def alive?
-          Processes.new(exec_ps).up?
+          processes(cached: false).up?
+        end
+
+        def processes(cached: true)
+          Processes.new(cached ? exec_ps_cached : exec_ps)
         end
 
         def exec_ps

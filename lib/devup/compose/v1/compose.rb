@@ -67,7 +67,7 @@ module Devup
         end
 
         def alive?
-          Compose::Processes.new(exec_ps).up?
+          Processes.new(exec_ps).up?
         end
 
         def exec_ps

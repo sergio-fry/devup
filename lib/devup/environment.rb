@@ -103,7 +103,7 @@ module Devup
 
     def compose
       @compose ||= begin
-                     Compose.new(
+                     Compose::V1::Compose.new(
                        root.join("docker-compose.devup.yml"),
                        project: project, logger: logger, shell: shell
                      )

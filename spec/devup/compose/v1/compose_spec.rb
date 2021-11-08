@@ -1,4 +1,4 @@
-require "devup/compose"
+require "devup/compose/v1/compose"
 require "devup/logger"
 require "devup/compose/port_config"
 

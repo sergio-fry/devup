@@ -1,4 +1,4 @@
-require "devup/compose/processes"
+require "devup/compose/v1/processes"
 require "devup/port_mapping"
 
 module Devup

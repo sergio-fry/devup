@@ -25,7 +25,7 @@ module Devup
       private
 
       def service_lines
-        output.split("\n")[2..-1]
+        output.split("\n")[1..-1]
       end
     end
   end

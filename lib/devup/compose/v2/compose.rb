@@ -1,4 +1,5 @@
 require "devup/compose/v1/compose"
+require "devup/compose/v2/processes"
 
 module Devup
   module Compose

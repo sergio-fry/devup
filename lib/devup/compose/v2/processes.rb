@@ -6,14 +6,14 @@ module Devup
       class Processes < V1::Processes
         def up?
           service_lines.map { |line|
-            line.match(/Up/) && !line.match(/Exit/)
+            line.match(/running/) && !line.match(/exited/)
           }.all?
         end
 
         private
 
         def service_lines
-          output.split("\n")[2..-1]
+          output.split("\n")[1..-1]
         end
       end
     end

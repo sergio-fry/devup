@@ -1,6 +1,6 @@
 require "yaml"
 
-require "devup/compose/processes"
+require "devup/compose/v1/processes"
 require "devup/compose/port_config"
 
 module Devup

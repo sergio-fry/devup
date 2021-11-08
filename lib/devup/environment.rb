@@ -1,10 +1,11 @@
 require "yaml"
 
 require "devup/logger"
-require "devup/compose/v1/compose"
 require "devup/service"
 require "devup/service_dotenv"
 require "devup/shell"
+
+require "devup/compose"
 
 module Devup
   class Environment
@@ -103,7 +104,7 @@ module Devup
 
     def compose
       @compose ||= begin
-                     Compose::V1::Compose.new(
+                     Compose.current_version.new(
                        root.join("docker-compose.devup.yml"),
                        project: project, logger: logger, shell: shell
                      )

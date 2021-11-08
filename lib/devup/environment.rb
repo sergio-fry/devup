@@ -1,7 +1,7 @@
 require "yaml"
 
 require "devup/logger"
-require "devup/compose"
+require "devup/compose/v1/compose"
 require "devup/service"
 require "devup/service_dotenv"
 require "devup/shell"

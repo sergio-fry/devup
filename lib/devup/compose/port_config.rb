@@ -1,5 +1,5 @@
 module Devup
-  class Compose
+  module Compose
     class PortConfig
       def initialize(config)
         @config = config

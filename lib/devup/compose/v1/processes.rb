@@ -1,7 +1,7 @@
-require "devup/compose/port_mapping"
+require "devup/port_mapping"
 
 module Devup
-  class Compose
+  module Compose
     module V1
       class Processes
         attr_reader :output

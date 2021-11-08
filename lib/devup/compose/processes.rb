@@ -1,7 +1,7 @@
 require "devup/port_mapping"
 
 module Devup
-  class Compose
+  module Compose
     class Processes
       attr_reader :output
       def initialize(output)

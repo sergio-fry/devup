@@ -1,5 +1,11 @@
 # Change Log
 
+## master (unreleased)
+
+## 0.6.0
+  * Docker Compose v2.x support added
+  * refactoring
+
 
 ## 0.5.3
 

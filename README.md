@@ -28,6 +28,9 @@ Add **DevUp!** to your Gemfile
 
 ```ruby
 gem "devup", group: [:development, :test]
+
+# To prevent devup boot every time, you can require "devup/env" only:
+# gem "devup", group: [:development, :test], require: "devup/env"
 ```
 
 and

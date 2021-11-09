@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+  * require "devup/env" to prevent boot on every load
+
 ## 0.6.0
   * Docker Compose v2.x support added
   * refactoring

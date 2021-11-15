@@ -1,6 +1,12 @@
 # DevUp!  [![Travis (.com) branch](https://img.shields.io/travis/com/sergio-fry/devup/master)](https://travis-ci.com/github/sergio-fry/devup) [![Gem](https://img.shields.io/gem/v/devup)](https://rubygems.org/gems/devup) [![Code Climate coverage](https://img.shields.io/codeclimate/coverage/sergio-fry/devup)](https://codeclimate.com/github/sergio-fry/devup) [![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/sergio-fry/devup)](https://codeclimate.com/github/sergio-fry/devup) [![Gem](https://img.shields.io/gem/dt/devup)](https://rubygems.org/gems/devup) [![Hits-of-Code](https://hitsofcode.com/github/sergio-fry/devup)](https://hitsofcode.com/view/github/sergio-fry/devup)
 
-Describe development dependencies with docker-compose. It is not required to remember any fancy command to start docker. Just start developing your app. Rails is a first-class citizen, but could be used without ruby.
+
+Instead of installing and configuring local PostgreSQL, Redis and other external services, describe development dependencies with docker-compose. It is not required to remember any fancy command to start docker. Just start developing your app. Rails is a first-class citizen, but could be used without ruby.
+
+1. `bundle add aasm --group=development,test`
+2. Describe external services inside docker-compose.devup.yml
+3. `devup up`
+4. Confugure app to use ENV
 
 
 ## Requirements

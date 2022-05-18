@@ -2,6 +2,9 @@
 
 ## master (unreleased)
 
+
+## 0.6.1 
+
   * require "devup/env" to prevent boot on every load
 
 ## 0.6.0
